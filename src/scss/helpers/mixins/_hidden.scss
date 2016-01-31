@@ -1,0 +1,8 @@
+/*
+ * Hide from both screenreaders and browsers:
+ * http://juicystudio.com/article/screen-readers-display-none.php
+ */
+@mixin hidden {
+  display: none !important;
+  visibility: hidden;
+}

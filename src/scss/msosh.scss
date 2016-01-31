@@ -1,0 +1,167 @@
+@import 'helpers/functions';
+@import 'helpers/mixins';
+@import 'common';
+
+.msosh {
+  @include clearfix;
+  text-align: center;
+  &-item {
+    float: left;
+    line-height: 0;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &-icon {
+      color: #fff;
+      font-size: 20px;
+      font-family: "iconfont";
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      display: inline-block;
+      text-decoration: inherit;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    &-text {
+      display: block;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    @each $name, $color in $sites {
+      &.#{$name} {
+        background: $color;
+        &:active {
+          background: darken($color, 10%);
+        }
+      }
+    }
+  }
+
+  &-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+
+    .msosh-item {
+      display: block;
+      float: none;
+      margin: 0;
+    }
+  }
+
+  &-pop {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(#000, .65);
+    opacity: 0;
+
+    &-show {
+      opacity: 1;
+      transition: opacity 800ms ease-in;
+
+      @for $i from 1 through 3 {
+        .group#{$i} {
+          $duration: ($i - 1)*600ms+1200ms;
+          animation: soshtrans $duration 1 ease;
+        }
+      }
+    }
+
+    &-hide {
+      opacity: 0;
+      transition: opacity 800ms ease-in;
+
+      @for $i from 1 through 3 {
+        .group#{$i} {
+          $delay: ($i - 1)*300ms;
+          animation: soshtrans2 700ms 1 cubic-bezier(0.68,-.55,.265,1.55) $delay;
+        }
+      }
+    }
+
+    &-sites {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translate(0, -50%);
+    }
+
+    .msosh {
+      &-item {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+
+        &-icon {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  &-wxsharetip {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 60px;
+    width: 189px;
+    background-image: url(../img/msoshwxtip.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 600ms ease-out;
+    z-index: -1;
+
+    &.wxsharetip-show {
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+@keyframes soshtrans {
+  0% {
+    transform:translate3d(0,1136px,0);
+  }
+  50% {
+    transform:translate3d(0,0,0);
+  }
+  60% {
+    transform:translate3d(0,0,0);
+  }
+  100% {
+    transform:translate3d(0,0,0);
+  }
+}
+
+@keyframes soshtrans2 {
+  0% {
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
+  100%{
+    opacity:0;
+    transform:translate3d(0,500%,0);
+  }
+}

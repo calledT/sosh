@@ -1,0 +1,101 @@
+@import 'helpers/functions';
+@import 'helpers/mixins';
+@import 'common';
+
+.sosh {
+  @include clearfix;
+  &-item {
+    float: left;
+    line-height: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 2px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+
+    @each $name, $color in $sites {
+      &.#{$name} {
+        background: $color;
+
+        &:hover {
+          background: darken($color, 8%);
+        }
+      }
+    }
+
+    em {
+      color: #fff;
+      font-size: 18px;
+      font-family: "iconfont";
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      display: inline-block;
+      text-decoration: inherit;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  &-pop {
+    display: none;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 0 8px #cdcdcd;
+    padding: 20px;
+    border: 1px solid #eee;
+    z-index: 999;
+    &-show {
+      display: block;
+    }
+    &-close {
+      color: #bbb;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      line-height: 10px;
+      right: 10px;
+      top: 10px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: Consolas, Monaco;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+        color: #666;
+      }
+    }
+  }
+
+  &-qrcode {
+    &-pic {
+      width: 120px;
+      height: 120px;
+      overflow: hidden;
+      float: left;
+    }
+
+    &-text {
+      color: #666;
+      float: left;
+      font-size: 13px;
+      line-height: 30px;
+      margin-left: 30px;
+    }
+  }
+}
+
