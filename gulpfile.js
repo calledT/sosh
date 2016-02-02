@@ -45,6 +45,7 @@ gulp.task('package', function() {
   var jsStream = gulp.src(['src/js/qrcode.js', 'src/js/sosh.js']);
   var cssStream = gulp.src('src/css/sosh.css')
       .pipe($.cssnano({compatibility: 'ie7'}))
+      .pipe($.replace('../iconfont', './iconfont'))
       .pipe($.cssToJs());
 
   var stream = merge(jsStream, cssStream)
@@ -59,6 +60,7 @@ gulp.task('packagem', function() {
   var jsStream = gulp.src('src/js/msosh.js');
   var cssStream = gulp.src('src/css/msosh.css')
       .pipe($.cssnano())
+      .pipe($.replace('../iconfont', './iconfont'))
       .pipe($.cssToJs());
 
   var stream = merge(jsStream, cssStream)
