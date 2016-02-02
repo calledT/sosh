@@ -1,4 +1,6 @@
 # Social Share
+<img src="http://ww2.sinaimg.cn/bmiddle/68250c36gw1f0ldd5cq15j208w0dcmxr.jpg" alt="Mobile screenshot" height="160" title="Mobile screenshot">
+<img src="http://ww3.sinaimg.cn/large/68250c36gw1f0ldd690ftj20dc08waaj.jpg" alt="PC screenshot" width="240" title="PC screenshot">
 
 ## 特性
 * 使用iconfont当图标，容易自定义样式
