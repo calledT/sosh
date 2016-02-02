@@ -88,28 +88,24 @@ gulp.task('iconfont', function() {
             return {name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0)}
           }),
           fontName: ICONFONTNAME,
-          fontPath: '../iconfont/',
+          fontPath: '../',
           className: ICONPREFIX
         };
 
         // 创建iconfont scss模块
         var cssTmplPath = path.join(SRC.iconsvg.dir, 'template', ICONFONTTEMPLATE + '.css');
         var htmlTmplPath = path.join(SRC.iconsvg.dir, 'template', ICONFONTTEMPLATE + '.html');
-        gulp.src(cssTmplPath)
-          .pipe($.consolidate('lodash', options))
-          .pipe($.rename({basename: '_' + ICONFONTNAME, extname: '.scss'}))
-          .pipe(gulp.dest(path.join(SRC.scss.dir, 'component')));
 
         // 创建示例页面
         gulp.src(cssTmplPath)
           .pipe($.consolidate('lodash', options))
           .pipe($.rename({basename: ICONFONTNAME}))
-          .pipe(gulp.dest('src/sample'));
+          .pipe(gulp.dest('src/iconfont/sample'));
 
         gulp.src(htmlTmplPath)
           .pipe($.consolidate('lodash', options))
           .pipe($.rename({basename:'sample'}))
-          .pipe(gulp.dest('src/sample'));
+          .pipe(gulp.dest('src/iconfont/sample'));
       })
       .pipe(gulp.dest(SRC.iconfont.dir));
 
