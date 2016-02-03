@@ -44,6 +44,10 @@ table {
   border-spacing: 0;
 }
 
+*{-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;}
+
 /*******************************************************************************
 Theme Styles
 *******************************************************************************/
@@ -263,7 +267,10 @@ Full-Width Styles
   padding: 20px 0 30px;
 }
 
-.msosh{display: inline-block;vertical-align: middle;}
+.msosh{
+  display: inline-block;vertical-align: middle;
+  margin: 20px 0;
+}
 
 .outer {
   width: 100%;
@@ -375,7 +382,7 @@ Small Device Styles
 
 @media screen and (max-width: 480px) {
   body {
-    font-size:14px;
+    font-size:16px;
   }
 
   #downloads {
@@ -385,6 +392,10 @@ Small Device Styles
   .inner {
     min-width: 320px;
     max-width: 480px;
+  }
+
+  #header_wrap .inner {
+    padding: 60px 10px 20px 10px;
   }
 
   #project_title {

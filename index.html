@@ -3,6 +3,7 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>Sosh-socail share widget</title>
   <meta name="description" content="一个走社会主义道路，适合中国国情的社交分享组件">
   <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
@@ -117,6 +118,7 @@
   <div class="msosh"></div><button onclick="msosh.popIn({sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq', 'renren', 'douban']});">更多</button>
 
   <p>在微信里点击微信分享会在右上角浮出分享操作的提示，也可以手动调用<code>Msosh.wxShareTip()</code>函数，此函数仅在微信里生效。</p>
+  <p>在UC浏览器和QQ浏览器里支持唤起微信、QQ、微博客户端进行分享。其他浏览器里支持唤起QQ客户端的分享，微博分享使用webapi进行，而微信分享需要借用QQ浏览器进行，如果用户没有安装，则点击无反应。</p>
 </article>
     </div>
   </div>
