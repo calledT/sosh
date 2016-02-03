@@ -3,63 +3,90 @@
 <img src="http://ww3.sinaimg.cn/large/68250c36gw1f0ldd690ftj20dc08waaj.jpg" alt="PC screenshot" width="240" title="PC screenshot">
 
 ## 特性
-* 使用iconfont当图标，容易自定义样式
-* 样式打包在脚本里，减少http请求
-* 支持初始化的时候传参或者使用`data-`属性传参数，后者优先级高
-* PC端支持IE7以上浏览器,除了[qrcode](https://github.com/davidshimjs/qrcodejs)外，无其他库依赖
-* 移动端支持微信、QQ、微博的原生应用分享(借用UC浏览器或者QQ浏览器进行)
-* 移动端gzip之后仅5kb,PC端也仅10kb
 
-### PC端(sosh.js)
+- 针对PC和手机分为两个版本，移动版gzip之后仅5kb，PC版也仅10kb
+- 仅需调用`sosh.js`或者`msosh.js`，无其他库依赖
+- PC版支持IE7以上浏览器
+- 移动端支持`微信`,`QQ`,`微博`的原生应用分享(借用UC浏览器或者QQ浏览器或者URL scheme进行)
+- 样式包含在脚本里，减少http请求
+- 使用iconfont当图标
+- 支持使用`dataset`配置
 
-#### 参数说明
+## PC版（sosh.js)
 
-1. `Sosh`构造函数第一个参数为字符串，代表selector，支持id和类名两种形式，如`#id`或者`.classname`
-2. `Sosh`构造函数第二个参数对象字面量，代表分享组件初始化的配置
-    - `url` 分享的地址，默认值为网页当前的地址 
-    - `title` 分享的标题，默认值为当前网页`title`元素的内容
-    - `digest` 分享的描述，默认值为当前网页`<meta name="description">`元素的content
-    - `pic` 分享的图片，默认值为当前网页第一个`img`元素的图片地址
-    - `sites` 页面上显示分享的网站，为数组类型，默认值为`['weixin', 'weibo', 'yixin', 'qzone']`
+### 默认初始化
+`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的两行代码就可以用上分享
 
-#### 使用说明
-插入以下js引用到body标签结束前，默认初始化拥有类名`sosh`的元素
 ```html
-<script src="dist/sosh.js"></script>
+<div class="sosh"></div>
+<script src="dist/sosh.min.js"></script>
 ```
 
-初始化的时候传参
-```javascript
-new Sosh('.sosh', {title: 'socail share', sites: ['weixin', 'weibo', 'yixin']})
-```
+### 使用构造函数初始化
 
-也支持使用dataset进行配置,dataset配置优先级比函数参数高
+使用`Sosh`构造函数进行初始化:
+
+1. 第一个参数为字符串类型，代表选择器。支持简单的ID和Class两种形式，如：`#id`、`.classname`
+2. 第二个参数为对象字面量，配置分享的相关内容
+
 ```html
-<div class="sosh" data-title="social share" data-site='weixin,weibo,yixin'></div>
+<div id="soshid"></div>
+<script>
+  new Sosh('#soshid', {
+    // 分享的链接，默认使用location.href
+    url: '', 
+    // 分享的标题，默认使用document.title
+    title: '', 
+    // 分享的摘要，默认使用<meta name="description" content="">content的值  
+    digest: '', 
+    // 分享的图片，默认获取本页面第一个img元素的src
+    pic: '', 
+    // 选择要显示的分享站点，顺序同sites数组顺序，
+    // 支持设置的站点有weixin,yixin,weibo,qzone,tqq,douban,renren,tieba
+    sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+  })
+</script>
 ```
 
 
-### 移动端(msosh.js)
+### 使用dataset进行配置
 
-#### 参数说明
-1. `Msosh`构造函数第一个参数为字符串，代表selector，支持`querySelectorAll`所支持的参数类型
-2. `Msosh`构造函数第二个参数对象字面量，代表分享组件初始化的配置
-    - `url` 分享的地址，默认值为网页当前的地址 
-    - `title` 分享的标题，默认值为当前网页`title`元素的内容
-    - `digest` 分享的描述，默认值为当前网页`<meta name="description">`元素的content
-    - `pic` 分享的图片，默认值为当前网页第一个`img`元素的图片地址
-    - `sites` 页面上显示分享的网站，为数组类型，默认值为`[weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone]`
-    
-#### 使用说明
-插入以下js引用到body标签结束前
+除了能在构造函数初始化的时候进行参数配置外，也可以用`[data-*]`的方式进行配置，并且优先级高于函数参数
+
 ```html
-<script src="dist/msosh.js"></script>
+<div class="pcdataset" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
+<script>
+  new Sosh('.pcdataset', {
+    sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+  })
+</script>
 ```
-然后使用构造函数进行初始化,同样支持使用dataset进行配置
-```javascript
-var share = new Msosh('.msosh', {title: 'socail share', sites: ['weixin', 'weixintimeline', 'qq', 'qzone', 'weibo']);
+
+## 移动版（msosh.js）
+
+### 使用构造函数初始化
+移动版的构造函数为`Msosh`，移动版不会进行默认的初始化调用，需要手动初始化，构造函数的参数和PC版类似，第一个参数代表`selector`，支持`querySelectorAll`所支持的参数类型，第二个参数配置分享相关的内容。同样也支持使用`dataset`配置。
+
+```html
+<div class="msosh"></div>
+<script src="dist/msosh.min.js"></script>
+<script>
+  var msosh = new Msosh('.msosh', {
+    // 默认显示的网站为以下六个个,支持设置的网站有
+    // weixin,weixintimeline,qq,qzone,yixin,weibo,tqq,renren,douban,tieba
+    sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone']
+  });
+
+  // 初始化过后可以调用popIn函数来弹出分享窗口，一般用来做更多分享的用途
+  // 在第一个调用这个函数的时候可以传入配置参数，不传则使用初始化时
+  // 所使用的配置，参数仅在第一个调用的时候生效。
+  msosh.popIn({
+    sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone', 'tqq', 'renren', 'teiba']
+  })
+</script>
 ```
-在初始化之后，可以使用`share.popIn()`函数弹出分享网站列表浮层，调用这个函数的时候依然可以配置分享的参数和显示的网站，但配置仅在第一次调用的时候生效。
+
+在微信里点击微信分享会在右上角浮出分享操作的提示，也可以手动调用`Msosh.wxShareTip()`函数，此函数仅在微信里生效。
 
 在UC浏览器和QQ浏览器里支持唤起微信、QQ、微博客户端进行分享。其他浏览器里支持唤起QQ客户端的分享，微博分享使用webapi进行，而微信分享需要借用QQ浏览器进行，如果用户没有安装，则点击无反应。
 
