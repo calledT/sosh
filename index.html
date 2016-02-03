@@ -23,7 +23,60 @@
   <!-- MAIN CONTENT -->
   <div id="main_content_wrap" class="outer">
     <div id="main_content" class="inner">
-      <div class="sosh"></div>
+<article class="markdown-body"><h3>
+<a id="user-content-使用" class="anchor" href="PC%E7%89%88(sosh.js)" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PC版(sosh.js)</h3>
+
+<h4>
+<a id="user-content-默认初始化" class="anchor" href="#%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>默认初始化</h4>
+
+<p><code>Sosh</code>默认初始化带有类名<code>sosh</code>的元素，所以只需简单的两行代码就可以用上分享。</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>sosh<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>dist/sosh.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<div class="sosh"></div>
+
+<h4>
+<a id="user-content-构造函数初始化" class="anchor" href="%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用构造函数初始化</h4>
+
+<p>使用<code>Sosh</code>构造函数进行初始化:</p>
+
+<ol>
+<li>第一个参数为字符串类型，代表选择器。支持简单的ID和Class两种形式，如：<code>#id</code>、<code>.classname</code>.</li>
+<li>第二个参数为对象字面量，配置分享的相关内容</li>
+</ol>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>soshid<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+<span class="pl-s1">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">    <span class="pl-k">new</span> <span class="pl-en">Sosh</span>(<span class="pl-s"><span class="pl-pds">'</span>#soshid<span class="pl-pds">'</span></span>, {</span>
+<span class="pl-s1">        url<span class="pl-k">:</span> <span class="pl-smi">location</span>.<span class="pl-c1">href</span>, <span class="pl-c">// 默认使用location.href</span></span>
+<span class="pl-s1">        title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的标题<span class="pl-pds">'</span></span>, <span class="pl-c">// 默认使用document.title</span></span>
+<span class="pl-s1">        digest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的摘要<span class="pl-pds">'</span></span>, <span class="pl-c">// 默认使用&lt;meta name="description" content=""&gt;content的值  </span></span>
+<span class="pl-s1">        pic<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的图片<span class="pl-pds">'</span></span>, <span class="pl-c">// 默认获取本页面第一个img元素的src</span></span>
+<span class="pl-s1">        sites<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>weixin,<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>weibo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>yixin<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>qzone<span class="pl-pds">'</span></span>] <span class="pl-c">// 选择要显示的分享站点，顺序同sites数组顺序，支持设置的站点有weixin、yixin、weibo、qzone、tqq、douban、renren、tieba</span></span>
+<span class="pl-s1">    })</span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<div id="soshid"></div>
+
+<h4>
+<a id="user-content-使用dataset进行配置" class="anchor" href="#%E4%BD%BF%E7%94%A8dataset%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用dataset进行配置</h4>
+
+<p>除了能在构造函数初始化的时候进行参数配置外，也可以用<code>[data-*]</code>的方式进行配置，并且优先级高于函数参数</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>pcdataset<span class="pl-pds">"</span></span> <span class="pl-e">data-title</span>=<span class="pl-s"><span class="pl-pds">"</span>data-title设置标题<span class="pl-pds">"</span></span> <span class="pl-e">data-sites</span>=<span class="pl-s"><span class="pl-pds">"</span>yixin,weibo,weixin,tqq,qzone,tieba,douban,renren<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+<span class="pl-s1">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">    <span class="pl-k">new</span> <span class="pl-en">Sosh</span>(<span class="pl-s"><span class="pl-pds">'</span>.pcdataset<span class="pl-pds">'</span></span>, {</span>
+<span class="pl-s1">        url<span class="pl-k">:</span> <span class="pl-smi">location</span>.<span class="pl-c1">href</span>, </span>
+<span class="pl-s1">        title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的标题<span class="pl-pds">'</span></span>, </span>
+<span class="pl-s1">        digest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的摘要<span class="pl-pds">'</span></span>, </span>
+<span class="pl-s1">        pic<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>分享的图片<span class="pl-pds">'</span></span>, </span>
+<span class="pl-s1">        sites<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>weixin,<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>weibo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>yixin<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>qzone<span class="pl-pds">'</span></span>] </span>
+<span class="pl-s1">    })</span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<div class="pcdataset" data-title="data-title设置标题" data-sites="yixin,weibo,weixin,tqq,qzone,tieba,douban,renren"></div>
+</article>
     </div>
   </div>
   <!-- FOOTER  -->
@@ -34,6 +87,7 @@
     </footer>
   </div>
   <script src="javascripts/sosh.min.js"></script>
+  <script src="javascripts/main.js"></script>
 </body>
 </html>
 

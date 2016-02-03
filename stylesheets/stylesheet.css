@@ -59,7 +59,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 10px 0;
+  margin: 1em 0;
   font-weight: 700;
   color:#222222;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
@@ -266,7 +266,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 840px;
   padding: 20px 10px;
   margin: 0 auto;
 }
@@ -293,7 +293,7 @@ Full-Width Styles
 }
 
 #header_wrap .inner {
-  padding: 120px 10px 50px 10px;
+  padding: 150px 10px 50px 10px;
 }
 
 #project_title {
@@ -361,6 +361,10 @@ Full-Width Styles
 
 #footer_wrap {
   background: #212121;
+}
+
+#main_content .highlight {
+  margin-bottom: 1em;
 }
 
 
