@@ -61,7 +61,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 1em 0;
   font-weight: 700;
-  color:#222222;
+  color: #0097A7;
   font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
   letter-spacing: -1px;
 }
@@ -118,7 +118,7 @@ a {
   -ms-transition: text-shadow 0.5s ease;
 }
 
-a:hover, a:focus {text-decoration: underline;}
+a:hover, a:focus {text-decoration: none;}
 
 footer a {
   color: #F2F2F2;
@@ -259,6 +259,11 @@ form {
 /*******************************************************************************
 Full-Width Styles
 *******************************************************************************/
+.sosh {
+  padding: 20px 0 30px;
+}
+
+.msosh{display: inline-block;vertical-align: middle;}
 
 .outer {
   width: 100%;
@@ -362,11 +367,6 @@ Full-Width Styles
 #footer_wrap {
   background: #212121;
 }
-
-#main_content .highlight {
-  margin-bottom: 1em;
-}
-
 
 
 /*******************************************************************************
