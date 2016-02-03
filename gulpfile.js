@@ -50,7 +50,9 @@ gulp.task('package', function() {
 
   var stream = merge(jsStream, cssStream)
       .pipe($.concat('sosh.js'))
+      .pipe(gulp.dest('dist'))
       .pipe($.uglify())
+      .pipe($.rename({suffix: '.min'}))
       .pipe(gulp.dest('dist'));
 
   return stream;
@@ -65,7 +67,9 @@ gulp.task('packagem', function() {
 
   var stream = merge(jsStream, cssStream)
       .pipe($.concat('msosh.js'))
+      .pipe(gulp.dest('dist'))
       .pipe($.uglify())
+      .pipe($.rename({suffix: '.min'}))
       .pipe(gulp.dest('dist'));
 
   return stream;

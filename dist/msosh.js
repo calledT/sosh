@@ -1,1 +1,413 @@
-!function(e,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof module&&module.exports?module.exports=t():e.Msosh=t()}(this,function(){function e(){var e=arguments;"string"===o(e[0])?(this.elems=f.querySelectorAll(e[0]),this.length=this.elems.length,this.opts=e[1],this.init(this.opts)):"object"===o(e[0])&&(this.opts=e[0])}function t(){for(var e={},t=0;t<arguments.length;t++){var i=arguments[t];for(var o in i)h.call(i,o)&&(e[o]=i[o])}return e}function o(e){return null===e?"null":void 0===typeof e?"undefined":d.call(e).match(/\s([a-zA-Z]+)/)[1].toLowerCase()}function s(e,t){var i=[];for(var o in t)i.push(o+"="+t[o]);return e+(-1!==e.indexOf("?")?"&":"?")+i.join("&")}function n(e){for(var t=location.search.substring(1),i=t.split("&"),o=i.length,s=0;o>s;s++){var n=i[s].split("=");if(decodeURIComponent(n[0])==e)return decodeURIComponent(n[1])}}function a(e,t,i,o){e.addEventListener(i,function(e){for(var i=e.target,s=e.currentTarget;i&&i!==s;){if(r(i,t))return void o.call(i,e);i=i.parentNode}},!1)}function r(e,t){var i=Element.prototype,o=i.matches||i.webkitMatchesSelector||i.mozMatchesSelector||i.msMatchesSelector||function(e){return-1!==[].indexOf.call(f.querySelectorAll(e),this)};return o.call(e,t)}function c(e,t){var i=f.createElement("script");i.src=e,i.onload=onreadystatechange=function(){this.readyState&&"load"!==this.readyState&&"complete"!==this.readyState||(t&&t(),i.onload=onreadystatechange,i.parentNode.removeChild(i))},u.appendChild(i)}function p(e){return e=e.toLowerCase(),-1!==w.indexOf(e)}function l(e){var t=e.split(".");return parseFloat(t[0]+"."+t[1])}function m(e){if(T>8)window.location.href=e;else{var t=f.createElement("iframe");t.style.display="none",t.src=e,u.appendChild(t),setTimeout(function(){t&&t.parentNode&&t.parentNode.removeChild(t)},5e3)}}var h=Object.prototype.hasOwnProperty,d=Object.prototype.toString,f=document,u=f.body,b=f.getElementsByName("description")[0],g=f.getElementsByTagName("img")[0],w=navigator.userAgent.toLowerCase(),x=p("iPhone")||p("iPad")||p("iPod"),y=p("Android"),v=p("UCBrowser"),q=p("MQQBrowser"),_=p("MicroMessenger"),z=q?l(w.split("mqqbrowser/")[1]):0,S=v?l(w.split("ucbrowser/")[1]):0,T=x?parseInt(w.match(/\s*os\s*\d/gi)[0].split(" ")[2],10):0,A=!1;(x&&S>=10.2||y&&S>=9.7||z>=5.4)&&(A=!0),_&&u.insertAdjacentHTML("beforeend",'<div class="msosh-wxsharetip"></div>');var C='<a class="msosh-item {{site}}" data-site="{{site}}" href="javascript:;"><em class="msosh-item-icon">{{icon}}</em><span class="msosh-item-text">{{name}}</span></a>',E={weixin:{name:"微信好友",icon:"&#xeA07;"},weixintimeline:{name:"朋友圈",icon:"&#xeA10;"},qq:{name:"QQ好友",icon:"&#xeA09;",scheme:"mqqapi://share/to_fri?src_type=web&version=1&file_type=news"},qzone:{name:"QQ空间",icon:"&#xeA02;",api:"//sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{url}}&title={{title}}&pics={{pic}}&desc={{digest}}",scheme:x?"mqqapi://share/to_fri?file_type=news&src_type=web&version=1&generalpastboard=1&shareType=1&cflag=1&objectlocation=pasteboard&callback_type=scheme&callback_name=QQ41AF4B2A":"mqqapi://share/to_qzone?src_type=app&version=1&file_type=news&req_type=1"},yixin:{name:"易信",icon:"&#xeA08;",api:"//open.yixin.im/share?url={{url}}&title={{title}}&pic={{pic}}&desc={{digest}}"},weibo:{name:"微博",icon:"&#xeA06;",api:"//service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{pic}}"},tqq:{name:"腾讯微博",icon:"&#xeA05;",api:"//share.v.t.qq.com/index.php?c=share&a=index&url={{url}}&title={{title}}&pic={{pic}}"},renren:{name:"人人网",icon:"&#xeA03;",api:"//widget.renren.com/dialog/share?resourceUrl={{url}}&title={{title}}&pic={{pic}}&description={{digest}}"},douban:{name:"豆瓣",icon:"&#xeA01;",api:"//douban.com/recommend/?url={{url}}&title={{title}}&image={{pic}}"},tieba:{name:"百度贴吧",icon:"&#xeA04;",api:"//tieba.baidu.com/f/commit/share/openShareApi?url={{url}}&title={{title}}&desc={{digest}}"}},j={weibo:["kSinaWeibo","SinaWeibo",11],weixin:["kWeixin","WechatFriends",1],weixintimeline:["kWeixinFriend","WechatTimeline",8],qq:["kQQ","QQ",4],qzone:["kQZone","Qzone",3]},Q={title:f.title,url:location.href,digest:b&&b.content||"",pic:g&&g.src||"",from:location.host,sites:["weixin","weixintimeline","yixin","weibo","qq","qzone"]};return e.prototype={constructor:this,init:function(e){var o=n("__msoshbridge");if(o&&"function"==typeof history.replaceState){var s=location.href.replace(new RegExp("[&?]__msoshbridge="+o,"gi"),"");history.replaceState(null,f.title,s),this.shareTo(o,t(Q,e))}for(i=0;i<this.length;i++){var a=this.elems[i],r=t(a.dataset);r.sites&&(r.sites=r.sites.split(","));var c=t(Q,e,r),p=this.getSitesHtml(c.sites);a.insertAdjacentHTML("beforeend",p),a.classList.add("msosh"),this._handlerClick(a,c)}},getSitesHtml:function(e,t){for(var i=0,s="",n=e.length,t="number"===o(t)&&0!==t?t:0;n>i;i++)t&&i%t===0&&(s+='<div class="msosh-group group'+(i/t+1)+'">'),s+=this.parseTemplate(e[i]),!t||i%t!==t-1&&i!==n-1||(s+="</div>");return s},parseTemplate:function(e){return C.replace(/\{\{site\}\}/g,e).replace(/\{\{icon\}\}/g,E[e].icon).replace(/\{\{name\}\}/g,E[e].name)},shareTo:function(t,i){var o,n,a=this,r=E[t].api;if(A){if(v&&(j[t]&&(o=x?j[t][0]:j[t][1]),void 0!==o))return n=[i.title,i.digest,i.url,o,"","@"+i.from,""],window.ucweb&&ucweb.startRequest&&ucweb.startRequest("shell.page_share",n),void(window.ucbrowser&&ucbrowser.web_share&&ucbrowser.web_share.apply(null,n));if(q&&(j[t]&&(o=j[t][2]),void 0!==o))return void(window.browser?(n={url:i.url,title:i.title,description:i.digest,img_url:i.pic,img_title:i.title,to_app:o,cus_txt:""},browser.app&&browser.app.share(n)):c("//jsapi.qq.com/get?api=app.share",function(){a.shareTo(t,i)}))}if("qzone"===t||"qq"==t){var p=s(E[t].scheme,{share_id:"1101685683",url:btoa(i.url),title:btoa(i.title),description:btoa(i.digest),previewimageUrl:btoa(i.pic),image_url:btoa(i.pic)});return void m(p)}if(-1!==t.indexOf("weixin")){var l=s(location.href,{__msoshbridge:t});m("mttbrowser://url="+l)}if(_&&-1!==t.indexOf("weixin"))return void e.wxShareTip();if(r){for(k in i)r=r.replace(new RegExp("{{"+k+"}}","g"),encodeURIComponent(i[k]));window.open(r,"_blank")}},popIn:function(e){if(!this.popElem){var i=t(Q,this.opts,e),o='<div class="msosh-pop"><div class="msosh-pop-sites">'+this.getSitesHtml(i.sites,3)+"</div></div>";u.insertAdjacentHTML("beforeend",o),this.popElem=f.querySelector(".msosh-pop"),this.popClass=this.popElem.classList,this._handlerClick(this.popElem,i),this.popElem.onclick=function(){this.popOut()}.bind(this)}this.popClass.remove("msosh-pop-hide"),this.popElem.style.display="block",setTimeout(function(){this.popClass.add("msosh-pop-show")}.bind(this),0)},popOut:function(){this.popElem&&(this.popClass.remove("msosh-pop-show"),this.popClass.add("msosh-pop-hide"),setTimeout(function(){this.popElem.style.display="none"}.bind(this),800))},_handlerClick:function(e,t){var i=this;a(e,".msosh-item","click",function(){i.shareTo(this.dataset.site,t)})}},e.wxShareTip=function(e){if("number"!==o(e)&&(e=2e3),_){var t=f.querySelector(".msosh-wxsharetip");t.classList.add("wxsharetip-show"),setTimeout(function(){t.classList.remove("wxsharetip-show")},e)}},u.addEventListener("touchstart",function(){},!1),e}),!function(){var e='@font-face{font-family:iconfont;src:url(./iconfont/soshfont.eot);src:url(./iconfont/soshfont.eot?#iefix) format("eot"),url(./iconfont/soshfont.woff2) format("woff2"),url(./iconfont/soshfont.woff) format("woff"),url(./iconfont/soshfont.ttf) format("truetype"),url(./iconfont/soshfont.svg#soshfont) format("svg");font-weight:400;font-style:normal}.msosh{*zoom:1;text-align:center}.msosh:after,.msosh:before{content:" ";display:table}.msosh:after{clear:both}.msosh-item{float:left;line-height:0;width:36px;height:36px;line-height:36px;border-radius:50%;text-align:center;margin:5px;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}.msosh-item-icon{color:#fff;font-size:20px;font-family:iconfont;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;display:inline-block;text-decoration:inherit;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.msosh-item-text{display:block;font-size:0;line-height:0}.msosh-item.weixin{background:#49b233}.msosh-item.weixin:active{background:#398a28}.msosh-item.yixin{background:#23cfaf}.msosh-item.yixin:active{background:#1ca38a}.msosh-item.weibo{background:#f04e59}.msosh-item.weibo:active{background:#ec1f2d}.msosh-item.qzone{background:#fdbe3d}.msosh-item.qzone:active{background:#fcad0b}.msosh-item.renren{background:#1f7fc9}.msosh-item.renren:active{background:#18639d}.msosh-item.tieba{background:#5b95f0}.msosh-item.tieba:active{background:#2c77ec}.msosh-item.douban{background:#228a31}.msosh-item.douban:active{background:#186122}.msosh-item.tqq{background:#97cbe1}.msosh-item.tqq:active{background:#6fb7d6}.msosh-item.qq{background:#4081e1}.msosh-item.qq:active{background:#2066ce}.msosh-item.weixintimeline{background:#1cb526}.msosh-item.weixintimeline:active{background:#15891d}.msosh-group{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:15px 20px}.msosh-group .msosh-item{display:block;float:none;margin:0}.msosh-pop{display:none;position:fixed;z-index:1;top:0;bottom:0;left:0;right:0;height:100%;width:100%;background:rgba(0,0,0,.65);opacity:0}.msosh-pop-show{opacity:1;-webkit-transition:opacity .8s ease-in;transition:opacity .8s ease-in}.msosh-pop-show .group1{-webkit-animation:a 1.2s 1 ease;animation:a 1.2s 1 ease}.msosh-pop-show .group2{-webkit-animation:a 1.8s 1 ease;animation:a 1.8s 1 ease}.msosh-pop-show .group3{-webkit-animation:a 2.4s 1 ease;animation:a 2.4s 1 ease}.msosh-pop-hide{opacity:0;-webkit-transition:opacity .8s ease-in;transition:opacity .8s ease-in}.msosh-pop-hide .group1{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) 0ms;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) 0ms}.msosh-pop-hide .group2{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .3s;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .3s}.msosh-pop-hide .group3{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .6s;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .6s}.msosh-pop-sites{position:absolute;top:50%;left:0;width:100%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.msosh-pop .msosh-item{width:60px;height:60px;line-height:60px}.msosh-pop .msosh-item-icon{font-size:28px}.msosh-wxsharetip{position:absolute;top:5px;right:5px;height:60px;width:189px;background-image:url(../img/msoshwxtip.png);background-size:contain;background-repeat:no-repeat;opacity:0;visibility:hidden;-webkit-transition:all .6s ease-out;transition:all .6s ease-out;z-index:-1}.msosh-wxsharetip.wxsharetip-show{z-index:1;opacity:1;visibility:visible}@-webkit-keyframes a{0%{-webkit-transform:translate3d(0,1136px,0);transform:translate3d(0,1136px,0)}50%,60%,to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes a{0%{-webkit-transform:translate3d(0,1136px,0);transform:translate3d(0,1136px,0)}50%,60%,to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes b{0%{opacity:1;-webkit-transform:translateZ(0);transform:translateZ(0)}to{opacity:0;-webkit-transform:translate3d(0,500%,0);transform:translate3d(0,500%,0)}}@keyframes b{0%{opacity:1;-webkit-transform:translateZ(0);transform:translateZ(0)}to{opacity:0;-webkit-transform:translate3d(0,500%,0);transform:translate3d(0,500%,0)}}',t=document.createElement("style");t.type="text/css",t.styleSheet?t.styleSheet.cssText=e:t.appendChild(document.createTextNode(e)),(document.head||document.getElementsByTagName("head")[0]).appendChild(t)}();
+!function(){var a="@font-face{font-family:iconfont;src:url(./iconfont/soshfont.eot);src:url(./iconfont/soshfont.eot?#iefix) format(\"eot\"),url(./iconfont/soshfont.woff2) format(\"woff2\"),url(./iconfont/soshfont.woff) format(\"woff\"),url(./iconfont/soshfont.ttf) format(\"truetype\"),url(./iconfont/soshfont.svg#soshfont) format(\"svg\");font-weight:400;font-style:normal}.msosh{*zoom:1;text-align:center}.msosh:after,.msosh:before{content:\" \";display:table}.msosh:after{clear:both}.msosh-item{float:left;line-height:0;width:36px;height:36px;line-height:36px;border-radius:50%;text-align:center;margin:5px;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}.msosh-item-icon{color:#fff;font-size:20px;font-family:iconfont;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;display:inline-block;text-decoration:inherit;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.msosh-item-text{display:block;font-size:0;line-height:0}.msosh-item.weixin{background:#49b233}.msosh-item.weixin:active{background:#398a28}.msosh-item.yixin{background:#23cfaf}.msosh-item.yixin:active{background:#1ca38a}.msosh-item.weibo{background:#f04e59}.msosh-item.weibo:active{background:#ec1f2d}.msosh-item.qzone{background:#fdbe3d}.msosh-item.qzone:active{background:#fcad0b}.msosh-item.renren{background:#1f7fc9}.msosh-item.renren:active{background:#18639d}.msosh-item.tieba{background:#5b95f0}.msosh-item.tieba:active{background:#2c77ec}.msosh-item.douban{background:#228a31}.msosh-item.douban:active{background:#186122}.msosh-item.tqq{background:#97cbe1}.msosh-item.tqq:active{background:#6fb7d6}.msosh-item.qq{background:#4081e1}.msosh-item.qq:active{background:#2066ce}.msosh-item.weixintimeline{background:#1cb526}.msosh-item.weixintimeline:active{background:#15891d}.msosh-group{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:15px 20px}.msosh-group .msosh-item{display:block;float:none;margin:0}.msosh-pop{display:none;position:fixed;z-index:1;top:0;bottom:0;left:0;right:0;height:100%;width:100%;background:rgba(0,0,0,.65);opacity:0}.msosh-pop-show{opacity:1;-webkit-transition:opacity .8s ease-in;transition:opacity .8s ease-in}.msosh-pop-show .group1{-webkit-animation:a 1.2s 1 ease;animation:a 1.2s 1 ease}.msosh-pop-show .group2{-webkit-animation:a 1.8s 1 ease;animation:a 1.8s 1 ease}.msosh-pop-show .group3{-webkit-animation:a 2.4s 1 ease;animation:a 2.4s 1 ease}.msosh-pop-hide{opacity:0;-webkit-transition:opacity .8s ease-in;transition:opacity .8s ease-in}.msosh-pop-hide .group1{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) 0ms;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) 0ms}.msosh-pop-hide .group2{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .3s;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .3s}.msosh-pop-hide .group3{-webkit-animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .6s;animation:b .7s 1 cubic-bezier(.68,-.55,.265,1.55) .6s}.msosh-pop-sites{position:absolute;top:50%;left:0;width:100%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.msosh-pop .msosh-item{width:60px;height:60px;line-height:60px}.msosh-pop .msosh-item-icon{font-size:28px}.msosh-wxsharetip{position:absolute;top:5px;right:5px;height:60px;width:189px;background-image:url(../img/msoshwxtip.png);background-size:contain;background-repeat:no-repeat;opacity:0;visibility:hidden;-webkit-transition:all .6s ease-out;transition:all .6s ease-out;z-index:-1}.msosh-wxsharetip.wxsharetip-show{z-index:1;opacity:1;visibility:visible}@-webkit-keyframes a{0%{-webkit-transform:translate3d(0,1136px,0);transform:translate3d(0,1136px,0)}50%,60%,to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@keyframes a{0%{-webkit-transform:translate3d(0,1136px,0);transform:translate3d(0,1136px,0)}50%,60%,to{-webkit-transform:translateZ(0);transform:translateZ(0)}}@-webkit-keyframes b{0%{opacity:1;-webkit-transform:translateZ(0);transform:translateZ(0)}to{opacity:0;-webkit-transform:translate3d(0,500%,0);transform:translate3d(0,500%,0)}}@keyframes b{0%{opacity:1;-webkit-transform:translateZ(0);transform:translateZ(0)}to{opacity:0;-webkit-transform:translate3d(0,500%,0);transform:translate3d(0,500%,0)}}",b=document.createElement("style");b.type="text/css",b.styleSheet?b.styleSheet.cssText=a:b.appendChild(document.createTextNode(a)),(document.head||document.getElementsByTagName("head")[0]).appendChild(b)}();
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    root.Msosh = factory();
+  }
+}(this, function() {
+  var hasOwn = Object.prototype.hasOwnProperty;
+  var toString = Object.prototype.toString;
+  var doc = document;
+  var body = doc.body;
+  var metaDesc = doc.getElementsByName('description')[0];
+  var firstImg = doc.getElementsByTagName('img')[0];
+
+  var ua = navigator.userAgent.toLowerCase();
+  var isIOS = deviceDetect('iPhone') || deviceDetect('iPad') || deviceDetect('iPod');
+  var isAndroid = deviceDetect('Android');
+  var isUCBrowser = deviceDetect('UCBrowser');
+  var isQQBrowser = deviceDetect('MQQBrowser');
+  var isWeixin = deviceDetect('MicroMessenger');
+  var qqBrowserVersion = isQQBrowser ? getVersion(ua.split('mqqbrowser/')[1]) : 0;
+  var ucBrowserVersion = isUCBrowser ? getVersion(ua.split('ucbrowser/')[1]) : 0;
+  var iOSVersion = isIOS ? parseInt(ua.match(/\s*os\s*\d/gi)[0].split(' ')[2], 10) : 0;
+
+  var supportNativeShare = false;
+
+  if ((isIOS && ucBrowserVersion >= 10.2) || (isAndroid && ucBrowserVersion >= 9.7) || qqBrowserVersion >= 5.4) supportNativeShare = true;
+
+  if (isWeixin) body.insertAdjacentHTML('beforeend', '<div class="msosh-wxsharetip"></div>');
+
+  var template = '<a class="msosh-item {{site}}" data-site="{{site}}" href="javascript:;"><em class="msosh-item-icon">{{icon}}</em><span class="msosh-item-text">{{name}}</span></a>';
+
+  var socialSites = {
+    weixin: {
+      name: '微信好友',
+      icon: '&#xeA07;'
+    },
+    weixintimeline: {
+      name: '朋友圈',
+      icon: '&#xeA10;'
+    },
+    qq: {
+      name: 'QQ好友',
+      icon: '&#xeA09;',
+      scheme: 'mqqapi://share/to_fri?src_type=web&version=1&file_type=news'
+    },
+    qzone: {
+      name: 'QQ空间',
+      icon: '&#xeA02;',
+      api: '//sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{url}}&title={{title}}&pics={{pic}}&desc={{digest}}',
+      scheme: isIOS ?
+      'mqqapi://share/to_fri?file_type=news&src_type=web&version=1&generalpastboard=1&shareType=1&cflag=1&objectlocation=pasteboard&callback_type=scheme&callback_name=QQ41AF4B2A' :
+      'mqqapi://share/to_qzone?src_type=app&version=1&file_type=news&req_type=1'
+    },
+    yixin: {
+      name: '易信',
+      icon: '&#xeA08;',
+      api: '//open.yixin.im/share?url={{url}}&title={{title}}&pic={{pic}}&desc={{digest}}'
+    },
+    weibo: {
+      name: '微博',
+      icon: '&#xeA06;',
+      api: '//service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{pic}}'
+    },
+    tqq: {
+      name: '腾讯微博',
+      icon: '&#xeA05;',
+      api: '//share.v.t.qq.com/index.php?c=share&a=index&url={{url}}&title={{title}}&pic={{pic}}'
+    },
+    renren: {
+      name: '人人网',
+      icon: '&#xeA03;',
+      api: '//widget.renren.com/dialog/share?resourceUrl={{url}}&title={{title}}&pic={{pic}}&description={{digest}}'
+    },
+    douban: {
+      name: '豆瓣',
+      icon: '&#xeA01;',
+      api: '//douban.com/recommend/?url={{url}}&title={{title}}&image={{pic}}'
+    },
+    tieba: {
+      name: '百度贴吧',
+      icon: '&#xeA04;',
+      api: '//tieba.baidu.com/f/commit/share/openShareApi?url={{url}}&title={{title}}&desc={{digest}}'
+    }
+  };
+
+  // 支持浏览器原生分享的APP
+  var nativeShareApps = {
+    weibo: ['kSinaWeibo', 'SinaWeibo', 11],
+    weixin: ['kWeixin', 'WechatFriends', 1],
+    weixintimeline: ['kWeixinFriend', 'WechatTimeline', 8],
+    qq: ['kQQ', 'QQ', 4],
+    qzone: ['kQZone', 'Qzone', 3]
+  };
+
+  var defaults = {
+    title: doc.title,
+    url: location.href,
+    digest: metaDesc && metaDesc.content || '',
+    pic: firstImg && firstImg.src || '',
+    from: location.host,
+    sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone']
+  };
+
+  function Share() {
+    var args = arguments;
+    if (getType(args[0]) === 'string') {
+      this.elems = doc.querySelectorAll(args[0]);
+      this.length = this.elems.length;
+      this.opts = args[1];
+      this.init(this.opts);
+    } else if (getType(args[0]) === 'object') {
+      this.opts = args[0]
+    }
+  }
+
+  Share.prototype = {
+    constructor: this,
+    init: function(opts) {
+      // 普通浏览器没有webapi的分享是通过QQ浏览器当桥梁进行的，
+      // 需要通过URL参数判断分享到哪个地方
+      var site = getQueryVariable('__msoshbridge');
+      if (site) {
+        if (typeof history.replaceState === 'function') {
+          var url = location.href.replace(new RegExp('[&?]__msoshbridge='+site, 'gi'), '');
+          history.replaceState(null, doc.title, url);
+          this.shareTo(site, extend(defaults, opts));
+        }
+      }
+
+      for(i=0; i<this.length; i++) {
+        var elem = this.elems[i];
+
+        var dataset = extend(elem.dataset);
+
+        if (dataset.sites) dataset.sites = dataset.sites.split(',');
+
+        var config = extend(defaults, opts, dataset);
+
+        var sitesHtml = this.getSitesHtml(config.sites);
+
+        elem.insertAdjacentHTML('beforeend', sitesHtml);
+
+        elem.classList.add('msosh');
+
+        this._handlerClick(elem, config);
+      }
+    },
+    getSitesHtml: function (sites, groupsize) {
+      var i = 0, html = '',length = sites.length,
+          groupsize = getType(groupsize) === 'number' && groupsize !== 0 ? groupsize : 0;
+
+      for (; i<length; i++) {
+        if (groupsize && i%groupsize === 0) {
+          html += '<div class="msosh-group group'+((i/groupsize) + 1)+'">'
+        };
+
+        html += this.parseTemplate(sites[i]);
+
+        if (groupsize && (i%groupsize === groupsize-1 || i === length-1)) {
+          html += '</div>'
+        };
+      }
+      return html;
+    },
+    parseTemplate: function (site) {
+      return template.replace(/\{\{site\}\}/g, site)
+        .replace(/\{\{icon\}\}/g, socialSites[site].icon)
+        .replace(/\{\{name\}\}/g, socialSites[site].name);
+    },
+    shareTo: function (site, data) {
+      var app, shareInfo, _this = this, api = socialSites[site].api;
+
+      // 在UC和QQ浏览器里，对支持的应用调用原生分享
+      if (supportNativeShare) {
+        if (isUCBrowser) {
+          if (nativeShareApps[site]) {
+            app = isIOS ? nativeShareApps[site][0] : nativeShareApps[site][1];
+          }
+
+          if (app !== undefined) {
+            shareInfo = [data.title, data.digest, data.url, app, '', '@'+data.from, ''];
+
+            // android
+            if (window.ucweb) {
+              ucweb.startRequest && ucweb.startRequest('shell.page_share', shareInfo);
+            }
+
+            // ios
+            if (window.ucbrowser) {
+              ucbrowser.web_share && ucbrowser.web_share.apply(null, shareInfo);
+            }
+            return;
+          }
+        }
+
+        if (isQQBrowser) {
+          if (nativeShareApps[site]) app = nativeShareApps[site][2];
+          if (app !== undefined) {
+            if (window.browser) {
+              shareInfo = {
+                url: data.url,
+                title: data.title,
+                description: data.digest,
+                img_url: data.pic,
+                img_title: data.title,
+                to_app: app,
+                cus_txt: ''
+              };
+
+              browser.app && browser.app.share(shareInfo);
+            } else {
+              loadScript('//jsapi.qq.com/get?api=app.share', function() {
+                _this.shareTo(site, data);
+              });
+            }
+            return;
+          }
+        }
+      }
+
+      // 在普通浏览器里，使用URL Scheme唤起QQ客户端进行分享
+      if (site === 'qzone' || site == 'qq') {
+        var scheme = appendToQuerysting(socialSites[site].scheme, {
+          share_id: '1101685683',
+          url: btoa(data.url),
+          title: btoa(data.title),
+          description: btoa(data.digest),
+          previewimageUrl: btoa(data.pic), //For IOS
+          image_url: btoa(data.pic) //For Android
+        });
+        openAppByScheme(scheme);
+        return;
+      }
+
+      // 在普通浏览器里点击微信分享，通过QQ浏览器当桥梁唤起微信客户端
+      // 如果没有安装QQ浏览器则点击无反应
+      if (site.indexOf('weixin') !== -1) {
+        var mttbrowserURL = appendToQuerysting(location.href, {__msoshbridge: site});
+        openAppByScheme('mttbrowser://url=' + mttbrowserURL);
+      }
+
+      // 在微信里点微信分享，弹出右上角提示
+      if (isWeixin && (site.indexOf('weixin') !== -1)) {
+        Share.wxShareTip();
+        return;
+      }
+
+      // 对于没有原生分享的网站，使用webapi进行分享
+      if (api) {
+        for (k in data) {
+          api = api.replace(new RegExp('{{'+k+'}}', 'g'), encodeURIComponent(data[k]));
+        }
+        window.open(api, '_blank');
+      }
+    },
+    popIn: function (opts) {
+      if (!this.popElem) {
+        var config = extend(defaults, this.opts, opts);
+        var html = '<div class="msosh-pop"><div class="msosh-pop-sites">' + this.getSitesHtml(config.sites, 3) + '</div></div>';
+        body.insertAdjacentHTML('beforeend', html);
+        this.popElem = doc.querySelector('.msosh-pop');
+        this.popClass = this.popElem.classList;
+        this._handlerClick(this.popElem, config);
+        this.popElem.onclick = function() {
+          this.popOut();
+        }.bind(this);
+      }
+      this.popClass.remove('msosh-pop-hide');
+      this.popElem.style.display = 'block';
+      setTimeout(function() {
+        this.popClass.add('msosh-pop-show');
+      }.bind(this), 0);
+    },
+    popOut: function () {
+      if (this.popElem) {
+        this.popClass.remove('msosh-pop-show');
+        this.popClass.add('msosh-pop-hide');
+        setTimeout(function() {
+          this.popElem.style.display = 'none';
+        }.bind(this), 800);
+      }
+    },
+    _handlerClick: function(agent, data) {
+      var _this = this;
+      delegate(agent, '.msosh-item', 'click', function() {
+        _this.shareTo(this.dataset.site, data);
+      });
+    }
+  };
+
+  Share.wxShareTip = function (duration) {
+    if (getType(duration) !== 'number') duration = 2000;
+    if (isWeixin) {
+      var tipElem = doc.querySelector('.msosh-wxsharetip');
+      tipElem.classList.add('wxsharetip-show');
+      setTimeout(function() {
+        tipElem.classList.remove('wxsharetip-show');
+      }, duration);
+    }
+  };
+
+  function extend () {
+    var target = {}
+    for (var i = 0; i < arguments.length; i++) {
+      var source = arguments[i]
+      for (var key in source) {
+        if (hasOwn.call(source, key)) {
+          target[key] = source[key]
+        }
+      }
+    }
+    return target
+  }
+
+  function getType(obj) {
+    if (obj === null) return 'null';
+    if (typeof obj === undefined) return 'undefined';
+
+    return toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+  }
+
+  function appendToQuerysting(url, data) {
+    var arr = [];
+    for(var k in data) {
+      arr.push(k+'='+data[k]);
+    }
+    return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr.join('&');
+  }
+
+  function getQueryVariable(variable) {
+    var query = location.search.substring(1);
+    var vars = query.split('&'), length = vars.length;
+    for (var i = 0; i < length; i++) {
+      var pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) == variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+  }
+
+  function delegate(agent, selector, type, fn) {
+    agent.addEventListener(type, function(e) {
+      var target = e.target;
+      var ctarget = e.currentTarget;
+      while (target && target !== ctarget) {
+        if (selectorMatches(target, selector)) {
+          fn.call(target, e);
+          return;
+        }
+        target = target.parentNode;
+      }
+    }, false);
+  }
+
+  function selectorMatches(elem, selector) {
+    var p = Element.prototype;
+    var f = p.matches ||
+            p.webkitMatchesSelector ||
+            p.mozMatchesSelector ||
+            p.msMatchesSelector ||
+            function(s) {
+              return [].indexOf.call(doc.querySelectorAll(s), this) !== -1;
+            };
+
+    return f.call(elem, selector);
+  }
+
+  function loadScript(url, cb) {
+    var script = doc.createElement('script');
+    script.src = url;
+    script.onload = onreadystatechange = function() {
+      if (!this.readyState || this.readyState === 'load' || this.readyState === 'complete') {
+        cb && cb();
+        script.onload = onreadystatechange
+        script.parentNode.removeChild(script);
+      }
+    };
+    body.appendChild(script);
+  }
+
+  function deviceDetect(needle) {
+    needle = needle.toLowerCase();
+    return ua.indexOf(needle) !== -1;
+  }
+
+  function getVersion(nece) {
+    var arr = nece.split('.');
+    return parseFloat(arr[0] + '.' + arr[1]);
+  }
+
+  function openAppByScheme(scheme) {
+    if (iOSVersion > 8) {
+      window.location.href = scheme;
+    } else {
+      var iframe = doc.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = scheme;
+      body.appendChild(iframe);
+      setTimeout(function() {
+        iframe && iframe.parentNode && iframe.parentNode.removeChild(iframe);
+      }, 5000);
+    }
+  }
+
+  // Make :active work on IOS
+  body.addEventListener('touchstart', function(){}, false);
+
+  return Share;
+}));
