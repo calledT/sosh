@@ -225,11 +225,11 @@
       if (site === 'qzone' || site == 'qq') {
         var scheme = appendToQuerysting(socialSites[site].scheme, {
           share_id: '1101685683',
-          url: btoa(data.url),
-          title: btoa(data.title),
-          description: btoa(data.digest),
-          previewimageUrl: btoa(data.pic), //For IOS
-          image_url: btoa(data.pic) //For Android
+          url: btoa(encodeURIComponent(data.url)),
+          title: btoa(encodeURIComponent(data.title)),
+          description: btoa(encodeURIComponent(data.digest)),
+          previewimageUrl: btoa(encodeURIComponent(data.pic)), //For IOS
+          image_url: btoa(encodeURIComponent(data.pic)) //For Android
         });
         openAppByScheme(scheme);
         return;
