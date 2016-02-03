@@ -87,6 +87,15 @@
       height: 120px;
       overflow: hidden;
       float: left;
+
+      img {
+        height: 100%;
+        width: 100%;
+        vertical-align: top;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
     }
 
     &-text {

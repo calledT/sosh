@@ -62,37 +62,37 @@ if (!document.getElementsByClassName) {
     yixin: {
       name: '易信',
       icon: '&#xeA08;',
-      api: '//open.yixin.im/share?url={{url}}&title={{title}}&pic={{pic}}&desc={{digest}}'
+      api: 'http://open.yixin.im/share?url={{url}}&title={{title}}&pic={{pic}}&desc={{digest}}'
     },
     weibo: {
       name: '微博',
       icon: '&#xeA06;',
-      api: '//service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{pic}}'
+      api: 'http://service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{pic}}'
     },
     qzone: {
       name: 'QQ空间',
       icon: '&#xeA02;',
-      api: '//sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{url}}&title={{title}}&pics={{pic}}&desc={{digest}}'
+      api: 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{url}}&title={{title}}&pics={{pic}}&desc={{digest}}'
     },
     tqq: {
       name: '腾讯微博',
       icon: '&#xeA05;',
-      api: '//share.v.t.qq.com/index.php?c=share&a=index&url={{url}}&title={{title}}&pic={{pic}}'
+      api: 'http://share.v.t.qq.com/index.php?c=share&a=index&url={{url}}&title={{title}}&pic={{pic}}'
     },
     renren: {
       name: '人人网',
       icon: '&#xeA03;',
-      api: '//widget.renren.com/dialog/share?resourceUrl={{url}}&title={{title}}&pic={{pic}}&description={{digest}}'
+      api: 'http://widget.renren.com/dialog/share?resourceUrl={{url}}&title={{title}}&pic={{pic}}&description={{digest}}'
     },
     douban: {
       name: '豆瓣',
       icon: '&#xeA01;',
-      api: '//douban.com/recommend/?url={{url}}&title={{title}}&image={{pic}}'
+      api: 'http://douban.com/recommend/?url={{url}}&title={{title}}&image={{pic}}'
     },
     tieba: {
       name: '百度贴吧',
       icon: '&#xeA04;',
-      api: '//tieba.baidu.com/f/commit/share/openShareApi?url={{url}}&title={{title}}&desc={{digest}}'
+      api: 'http://tieba.baidu.com/f/commit/share/openShareApi?url={{url}}&title={{title}}&desc={{digest}}'
     }
   };
 
