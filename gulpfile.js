@@ -63,6 +63,7 @@ gulp.task('packagem', function() {
   var cssStream = gulp.src('src/css/msosh.css')
       .pipe($.cssnano())
       .pipe($.replace('../iconfont', './iconfont'))
+      .pipe($.replace('../img', './img'))
       .pipe($.cssToJs());
 
   var stream = merge(jsStream, cssStream)
