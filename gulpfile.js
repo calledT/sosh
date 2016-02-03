@@ -59,7 +59,7 @@ gulp.task('package', function() {
 });
 
 gulp.task('packagem', function() {
-  var jsStream = gulp.src('src/js/msosh.js');
+  var jsStream = gulp.src(['src/js/base64.js', 'src/js/msosh.js']);
   var cssStream = gulp.src('src/css/msosh.css')
       .pipe($.cssnano())
       .pipe($.replace('../iconfont', './iconfont'))

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>msosh share</title>
-  <meta name="description" content="测试">
+  <title>移动端分享</title>
+  <meta name="description" content="移动端分享测试">
   <link rel="stylesheet" href="../css/msosh.css">
   <style>
   *{margin: 0;}
@@ -15,6 +15,7 @@
 <body>
   <img src="http://tp3.sinaimg.cn/1747258422/180/40051921924/1" style="display: none;" alt="">
   <div class="sosha" id="share"></div><button onclick="share.popIn({sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq', 'renren', 'douban']});">更多</button>
+  <script src="../js/base64.js"></script>
   <script src="../js/msosh.js"></script>
   <script>
     var share = new Msosh('#share', {sites: ['weixin', 'weixintimeline', 'weibo', 'qq', 'qzone']});
