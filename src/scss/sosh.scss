@@ -7,10 +7,6 @@
   &-item {
     float: left;
     line-height: 0;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
     text-align: center;
     margin: 0 2px;
     text-decoration: none;
@@ -26,7 +22,7 @@
     }
 
     @each $name, $color in $sites {
-      &.#{$name} {
+      .sosh-icon-#{$name} {
         background: $color;
 
         &:hover {
@@ -36,6 +32,11 @@
     }
 
     em {
+      @include inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
       color: #fff;
       font-size: 18px;
       font-family: "iconfont";
@@ -47,6 +48,10 @@
       text-decoration: inherit;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+
+    &-text {
+      display: none;
     }
   }
 
