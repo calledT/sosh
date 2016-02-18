@@ -145,7 +145,7 @@ if (!document.getElementsByClassName) {
       key = sites[i];
       site = socialSites[key];
       if (site) {
-        html += '<a class="sosh-item '+key+'" data-site="'+key +'" title="分享到'+site.name+'" href="javascript:;"><em class="sosh-icon-'+key+'">'+site.icon+'</em></a>';
+        html += '<a class="sosh-item '+key+'" data-site="'+key +'" title="分享到'+site.name+'" href="javascript:;"><em class="sosh-icon-'+key+'">'+site.icon+'</em><span class="sosh-item-text">'+site.name+'</span></a>';
       }
     }
     return html;
