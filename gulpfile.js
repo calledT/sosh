@@ -44,7 +44,7 @@ gulp.task('sass', function() {
 gulp.task('package', function() {
   var jsStream = gulp.src(['src/js/qrcode.js', 'src/js/sosh.js']);
   var cssStream = gulp.src('src/css/sosh.css')
-      .pipe($.cssnano({compatibility: 'ie7'}))
+      .pipe($.cssnano({zindex: false}))
       .pipe($.replace('../iconfont', './iconfont'))
       .pipe($.cssToJs());
 
@@ -61,7 +61,7 @@ gulp.task('package', function() {
 gulp.task('packagem', function() {
   var jsStream = gulp.src(['src/js/base64.js', 'src/js/msosh.js']);
   var cssStream = gulp.src('src/css/msosh.css')
-      .pipe($.cssnano())
+      .pipe($.cssnano({zindex: false}))
       .pipe($.replace('../iconfont', './iconfont'))
       .pipe($.replace('../img', './img'))
       .pipe($.cssToJs());
@@ -83,7 +83,7 @@ gulp.task('iconfont', function() {
       }))
       .pipe($.iconfont({
         fontName: ICONFONTNAME,
-        appendUnicode: true,
+        prependUnicode: true,
         formats: ['ttf', 'eot', 'woff', 'woff2', 'svg'],
         timestamp: 0
       }))
