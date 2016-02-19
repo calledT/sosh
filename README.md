@@ -30,16 +30,16 @@
 <script>
 	new Sosh('#soshid', {
 		// 分享的链接，默认使用location.href
-		url: '', 
+		url: '',
 		// 分享的标题，默认使用document.title
-		title: '', 
-		// 分享的摘要，默认使用<meta name="description" content="">content的值  
-		digest: '', 
+		title: '',
+		// 分享的摘要，默认使用<meta name="description" content="">content的值
+		digest: '',
 		// 分享的图片，默认获取本页面第一个img元素的src
-		pic: '', 
+		pic: '',
 		// 选择要显示的分享站点，顺序同sites数组顺序，
 		// 支持设置的站点有weixin,yixin,weibo,qzone,tqq,douban,renren,tieba
-		sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+		sites: ['weixin,', 'weibo', 'yixin', 'qzone']
 	})
 </script>
 ```
@@ -53,7 +53,7 @@
 <div class="pcdataset" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
 <script>
 	new Sosh('.pcdataset', {
-		sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+		sites: ['weixin,', 'weibo', 'yixin', 'qzone']
 	})
 </script>
 ```
@@ -77,7 +77,7 @@
 	// 在第一个调用这个函数的时候可以传入配置参数，不传则使用初始化时
 	// 所使用的配置，参数仅在第一个调用的时候生效。
 	msosh.popIn({
-		sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone', 'tqq', 'renren', 'teiba']
+		sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone', 'tqq', 'renren', 'tieba']
 	})
 </script>
 ```
