@@ -179,7 +179,6 @@ if (!document.getElementsByClassName) {
   }
 
   function addClass (elem, className) {
-    console.log();
     if (!hasClass(elem, className)) {
       elem.className += ' ' + className;
     }
