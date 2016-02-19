@@ -15,10 +15,12 @@
 <body>
   <img src="http://tp3.sinaimg.cn/1747258422/180/40051921924/1" style="display: none;" alt="">
   <div class="sosha" id="share"></div><button onclick="share.popIn({sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq', 'renren', 'douban']});">更多</button>
+  <button onclick="msosh.popIn({sites: ['weixin', 'weixintimeline', 'weibo', 'yixin', 'qzone', 'tqq', 'qq', 'renren', 'douban', 'teiba']});">new Msosh()</button>
   <script src="../js/base64.js"></script>
   <script src="../js/msosh.js"></script>
   <script>
     var share = new Msosh('#share', {sites: ['weixin', 'weixintimeline', 'weibo', 'qq', 'qzone']});
+    var msosh = new Msosh();
   </script>
 </body>
 </html>

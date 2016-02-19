@@ -106,6 +106,7 @@
 
   function Share() {
     var args = arguments;
+    this.opts = {};
     if (getType(args[0]) === 'string') {
       this.elems = doc.querySelectorAll(args[0]);
       this.length = this.elems.length;
@@ -130,22 +131,24 @@
         }
       }
 
-      for(i=0; i<this.length; i++) {
-        var elem = this.elems[i];
+      if (this.length) {
+        for(i=0; i<this.length; i++) {
+          var elem = this.elems[i];
 
-        var dataset = extend(elem.dataset);
+          var dataset = extend(elem.dataset);
 
-        if (dataset.sites) dataset.sites = dataset.sites.split(',');
+          if (dataset.sites) dataset.sites = dataset.sites.split(',');
 
-        var config = extend(defaults, opts, dataset);
+          var config = extend(defaults, opts, dataset);
 
-        var sitesHtml = this.getSitesHtml(config.sites);
+          var sitesHtml = this.getSitesHtml(config.sites);
 
-        elem.insertAdjacentHTML('beforeend', sitesHtml);
+          elem.insertAdjacentHTML('beforeend', sitesHtml);
 
-        elem.classList.add('msosh');
+          elem.classList.add('msosh');
 
-        this._handlerClick(elem, config);
+          this._handlerClick(elem, config);
+        }
       }
     },
     getSitesHtml: function (sites, groupsize) {
@@ -166,9 +169,14 @@
       return html;
     },
     parseTemplate: function (site) {
-      return template.replace(/\{\{site\}\}/g, site)
-        .replace(/\{\{icon\}\}/g, socialSites[site].icon)
-        .replace(/\{\{name\}\}/g, socialSites[site].name);
+      if (socialSites[site]) {
+        return template.replace(/\{\{site\}\}/g, site)
+          .replace(/\{\{icon\}\}/g, socialSites[site].icon)
+          .replace(/\{\{name\}\}/g, socialSites[site].name);
+      } else {
+        console.warn('site [' + site + '] not exist.');
+        return '';
+      }
     },
     shareTo: function (site, data) {
       var app, shareInfo, _this = this, api = socialSites[site].api;
