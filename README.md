@@ -1,6 +1,4 @@
 # Social Share
-<img src="http://ww2.sinaimg.cn/bmiddle/68250c36gw1f0ldd5cq15j208w0dcmxr.jpg" alt="Mobile screenshot" height="160" title="Mobile screenshot">
-<img src="http://ww3.sinaimg.cn/large/68250c36gw1f0ldd690ftj20dc08waaj.jpg" alt="PC screenshot" width="240" title="PC screenshot">
 
 ## 特性
 
@@ -81,7 +79,7 @@
   // 在第一个调用这个函数的时候可以传入配置参数，不传则使用初始化时
   // 所使用的配置，参数仅在第一个调用的时候生效。
   msosh.popIn({
-    sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone', 'tqq', 'renren', 'teiba']
+    sites: ['weixin', 'weixintimeline', 'yixin', 'weibo', 'qq', 'qzone', 'tqq', 'renren', 'tieba']
   })
 </script>
 ```
