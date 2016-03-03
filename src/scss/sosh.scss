@@ -1,13 +1,11 @@
-@import 'helpers/functions';
-@import 'helpers/mixins';
 @import 'common';
 
 .sosh {
   @include clearfix;
+  text-align: center;
   &-item {
     float: left;
     line-height: 0;
-    text-align: center;
     margin: 0 2px;
     text-decoration: none;
     cursor: pointer;
@@ -21,37 +19,32 @@
       outline: 0;
     }
 
-    @each $name, $color in $sites {
-      .sosh-icon-#{$name} {
-        background: $color;
-
-        &:hover {
-          background: darken($color, 8%);
-        }
-      }
-    }
-
-    em {
+    &-icon {
       @include inline-block;
       width: 30px;
       height: 30px;
       line-height: 30px;
       border-radius: 50%;
       color: #fff;
-      font-size: 18px;
-      font-family: "iconfont";
-      font-style: normal;
-      font-weight: normal;
-      font-variant: normal;
-      text-transform: none;
-      display: inline-block;
-      text-decoration: inherit;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      text-decoration: none;
     }
 
     &-text {
       display: none;
+    }
+
+    @each $name, $color in $sites {
+      &.#{$name} {
+        .sosh-item-icon {
+          background: $color;
+        }
+
+        &:hover {
+          .sosh-item-icon {
+            background: darken($color, 10%);
+          }
+        }
+      }
     }
   }
 

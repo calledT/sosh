@@ -98,6 +98,7 @@ gulp.task('iconfont', function() {
         };
 
         // 创建iconfont scss模块
+        var scssTmplPath = path.join(SRC.iconsvg.dir, 'template', '_soshfont.scss');
         var cssTmplPath = path.join(SRC.iconsvg.dir, 'template', ICONFONTTEMPLATE + '.css');
         var htmlTmplPath = path.join(SRC.iconsvg.dir, 'template', ICONFONTTEMPLATE + '.html');
 
@@ -111,6 +112,10 @@ gulp.task('iconfont', function() {
           .pipe($.consolidate('lodash', options))
           .pipe($.rename({basename:'sample'}))
           .pipe(gulp.dest('src/iconfont/sample'));
+
+        gulp.src(scssTmplPath)
+          .pipe($.consolidate('lodash', _.assign(options, {fontPath: '../iconfont/'})))
+          .pipe(gulp.dest('src/scss/helpers'));
       })
       .pipe(gulp.dest(SRC.iconfont.dir));
 

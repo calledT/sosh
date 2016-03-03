@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "soshfont";
+  src: url('../iconfont/soshfont.eot');
+  src: url('../iconfont/soshfont.eot?#iefix') format('eot'),
+    url('../iconfont/soshfont.woff2') format('woff2'),
+    url('../iconfont/soshfont.woff') format('woff'),
+    url('../iconfont/soshfont.ttf') format('truetype'),
+    url('../iconfont/soshfont.svg#soshfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.sosh-item-icon,
+.msosh-item-icon {
+  font-family: "soshfont";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
