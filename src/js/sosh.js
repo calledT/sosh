@@ -180,7 +180,7 @@ if (!document.getElementsByClassName) {
 
   function addClass (elem, className) {
     if (!hasClass(elem, className)) {
-      elem.className += ' ' + className;
+      elem.className += (elem.className !== '' ? ' ' : '') + className;
     }
   }
 
