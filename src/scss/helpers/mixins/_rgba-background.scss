@@ -1,7 +1,0 @@
-@mixin rgba-background($color, $opacity){
-  background-color: rgba($color, $opacity);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#{ie-hex-str(rgba($color, $opacity))},endColorstr=#{ie-hex-str(rgba($color, $opacity))});
-  :root & {
-    filter: none;
-  }
-}

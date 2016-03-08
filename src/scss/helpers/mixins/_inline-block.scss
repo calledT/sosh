@@ -1,8 +1,0 @@
-
-@mixin inline-block {
-  display: inline-block;
-  @if legacy {
-    *display: inline;
-    *zoom: 1;
-  }
-}

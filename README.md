@@ -2,20 +2,20 @@
 
 ## 特性
 
-- 针对PC和手机分为两个版本，移动版gzip之后仅8kb，PC版也仅10kb
+- 针对PC和手机分为两个版本
 - 仅需调用`sosh.js`或者`msosh.js`，无其他库依赖
 - PC版支持IE7以上浏览器
 - 移动端支持`微信`,`QQ`,`微博`的原生应用分享(借用UC浏览器或者QQ浏览器或者URL scheme进行)
-- 样式包含在脚本里，减少http请求
 - 使用iconfont当图标
 - 支持使用`dataset`配置
 
 ## PC版（sosh.js)
 
 ### 默认初始化
-`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的两行代码就可以用上分享
+`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的三行代码就可以用上分享
 
 ```html
+<link rel="stylesheet" href="dist/sosh.min.css">
 <div class="sosh"></div>
 <script src="dist/sosh.min.js"></script>
 ```
@@ -32,16 +32,16 @@
 <script>
   new Sosh('#soshid', {
     // 分享的链接，默认使用location.href
-    url: '', 
+    url: '',
     // 分享的标题，默认使用document.title
-    title: '', 
-    // 分享的摘要，默认使用<meta name="description" content="">content的值  
-    digest: '', 
+    title: '',
+    // 分享的摘要，默认使用<meta name="description" content="">content的值
+    digest: '',
     // 分享的图片，默认获取本页面第一个img元素的src
-    pic: '', 
+    pic: '',
     // 选择要显示的分享站点，顺序同sites数组顺序，
     // 支持设置的站点有weixin,yixin,weibo,qzone,tqq,douban,renren,tieba
-    sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+    sites: ['weixin,', 'weibo', 'yixin', 'qzone']
   })
 </script>
 ```
@@ -55,7 +55,7 @@
 <div class="pcdataset" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
 <script>
   new Sosh('.pcdataset', {
-    sites: ['weixin,', 'weibo', 'yixin', 'qzone'] 
+    sites: ['weixin,', 'weibo', 'yixin', 'qzone']
   })
 </script>
 ```
@@ -66,6 +66,7 @@
 移动版的构造函数为`Msosh`，移动版不会进行默认的初始化调用，需要手动初始化，构造函数的参数和PC版类似，第一个参数代表`selector`，支持`querySelectorAll`所支持的参数类型，第二个参数配置分享相关的内容。同样也支持使用`dataset`配置。
 
 ```html
+<link rel="stylesheet" href="dist/msosh.min.css">
 <div class="msosh"></div>
 <script src="dist/msosh.min.js"></script>
 <script>
@@ -89,7 +90,7 @@
 在UC浏览器和QQ浏览器里支持唤起微信、QQ、微博客户端进行分享。其他浏览器里支持唤起QQ客户端的分享，微博分享使用webapi进行，而微信分享需要借用QQ浏览器进行，如果用户没有安装，则点击无反应。
 
 ## 样式
-因为CSS打包在js里所以无需另外引用，但是由于图标使用iconfont，所以还需要把图标放在网页能请求到的地方，当然也可以自定义优先级更高的样式覆盖默认的样式。
+由于图标使用iconfont，所以还需要把图标放在网页能请求到的地方，当然也可以自定义优先级更高的样式覆盖默认的样式。
 
 ## License
 

@@ -1,6 +1,6 @@
 {
   "name": "sosh",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Social Share You Need For PC Or Mobile",
   "author": {
     "name": "calledt",
@@ -26,6 +26,7 @@
     "browser-sync": "^2.10.0",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-base64": "^0.1.3",
     "gulp-concat": "^2.6.0",
     "gulp-consolidate": "^0.1.2",
     "gulp-css-to-js": "0.0.1",

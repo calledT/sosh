@@ -42,39 +42,35 @@ gulp.task('sass', function() {
 });
 
 gulp.task('package', function() {
-  var jsStream = gulp.src(['src/js/qrcode.js', 'src/js/sosh.js']);
-  var cssStream = gulp.src('src/css/sosh.css')
-      .pipe($.cssnano({zindex: false}))
-      .pipe($.replace('../iconfont', './iconfont'))
-      .pipe($.cssToJs());
+  var pcJsStream = gulp.src(['src/js/qrcode.js', 'src/js/sosh.js'])
+      .pipe($.concat('sosh.js'));
 
-  var stream = merge(jsStream, cssStream)
-      .pipe($.concat('sosh.js'))
+  var mJsStream = gulp.src(['src/js/base64.js', 'src/js/msosh.js'])
+      .pipe($.concat('msosh.js'));
+
+  var jsStream = merge(pcJsStream, mJsStream)
       .pipe(gulp.dest('dist'))
       .pipe($.uglify())
       .pipe($.rename({suffix: '.min'}))
       .pipe(gulp.dest('dist'));
 
-  return stream;
-});
-
-gulp.task('packagem', function() {
-  var jsStream = gulp.src(['src/js/base64.js', 'src/js/msosh.js']);
-  var cssStream = gulp.src('src/css/msosh.css')
+  var cssStream = gulp.src('src/css/*.css')
       .pipe($.cssnano({zindex: false}))
-      .pipe($.replace('../iconfont', './iconfont'))
-      .pipe($.replace('../img', './img'))
-      .pipe($.cssToJs());
-
-  var stream = merge(jsStream, cssStream)
-      .pipe($.concat('msosh.js'))
-      .pipe(gulp.dest('dist'))
-      .pipe($.uglify())
+      .pipe($.base64({
+        extensions: ['png'],
+        maxImageSize: 10*1024
+      }))
       .pipe($.rename({suffix: '.min'}))
       .pipe(gulp.dest('dist'));
 
+  var iconfontStream = gulp.src(SRC.iconfont.globpath, {base: 'src'})
+      .pipe(gulp.dest('dist'));
+
+  var stream = merge(jsStream, cssStream, iconfontStream);
+
   return stream;
 });
+
 
 gulp.task('iconfont', function() {
   var stream = gulp.src(SRC.iconsvg.globpath)
@@ -122,16 +118,6 @@ gulp.task('iconfont', function() {
   return stream;
 });
 
-gulp.task('move', function() {
-  var iconfontStream = gulp.src(SRC.iconfont.globpath, {base: 'src'})
-      .pipe(gulp.dest('dist'));
-
-  var imgStream = gulp.src(SRC.img.globpath, {base: 'src'})
-      .pipe($.imagemin())
-      .pipe(gulp.dest('dist'));
-
-  return merge(iconfontStream, imgStream);
-})
 
 gulp.task('clean', function(cb) {
   del('dist', cb());
@@ -150,5 +136,5 @@ gulp.task('serve', ['iconfont', 'sass'], function(cb) {
 });
 
 gulp.task('build', function(cb) {
-  runSequence(['iconfont', 'sass', 'clean'], ['package', 'packagem', 'move'], cb);
+  runSequence(['iconfont', 'sass', 'clean'], 'package', cb);
 });

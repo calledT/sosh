@@ -1,15 +1,24 @@
+@mixin clearfix {
+  &:before, &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
 
-@import 'mixins/border-radius';
-@import 'mixins/center';
-@import 'mixins/clearfix';
-@import 'mixins/gradient';
-@import 'mixins/hidden';
-@import 'mixins/inline-block';
-@import 'mixins/link-text-offscreen';
-@import 'mixins/media-print';
-@import 'mixins/onepixel';
-@import 'mixins/opacity';
-@import 'mixins/rgba-background';
-@import 'mixins/size';
-@import 'mixins/text-ellipsis';
-@import 'mixins/visuallyhidden';
+  &:after {
+    clear: both;
+  }
+
+  /**
+   * For IE 6/7 only
+   * Include this rule to trigger hasLayout and contain floats.
+   */
+  *zoom: 1;
+}
+
+
+@mixin inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
