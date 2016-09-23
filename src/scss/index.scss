@@ -1,0 +1,137 @@
+@mixin clearfix {
+  &:before, &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  /**
+   * For IE 6/7 only
+   * Include this rule to trigger hasLayout and contain floats.
+   */
+  *zoom: 1;
+}
+
+@mixin inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+
+$sites: (
+  weixin: #49b233,
+  yixin: #23cfaf,
+  weibo: #f04e59,
+  qzone: #fdbe3d,
+  renren: #1f7fc9,
+  tieba: #5b95f0,
+  douban: #228a31,
+  tqq: #97cbe1,
+  qq: #4081e1,
+  weixintimeline: #1cb526
+);
+
+.sosh {
+  @include clearfix;
+
+  text-align: center;
+
+  &-item {
+    float: left;
+    margin: 0 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+
+    &-icon {
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      text-decoration: none;
+    }
+
+    &-text {
+      display: none;
+    }
+
+    @each $name, $color in $sites {
+      &.#{$name} {
+        background: $color;
+
+        &:hover {
+          background: darken($color, 10%);
+        }
+      }
+    }
+  }
+
+  &-pop {
+    display: none;
+    position: absolute;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 0 8px #cdcdcd;
+    z-index: 999;
+
+    &-show {
+      display: block;
+    }
+
+    &-close {
+      color: #bbb;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      line-height: 10px;
+      right: 10px;
+      top: 10px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: Consolas, Monaco;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+        color: #666;
+      }
+    }
+  }
+
+  &-qrcode {
+    &-pic {
+      width: 120px;
+      height: 120px;
+      overflow: hidden;
+      float: left;
+
+      img {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: top;
+      }
+    }
+
+    &-text {
+      color: #666;
+      float: left;
+      font-size: 13px;
+      line-height: 30px;
+      margin-left: 30px;
+    }
+  }
+}
+

@@ -1,20 +1,25 @@
 {
   "name": "sosh",
-  "version": "0.0.3",
-  "description": "Social Share You Need For PC Or Mobile",
+  "version": "1.0.0-beta.1",
+  "description": "Social Share For Desktop",
   "author": {
     "name": "calledt",
     "email": "huanggengtao@gmail.com",
     "url": "calledt.com"
   },
   "repository": "calledt/sosh",
+  "license": "MIT",
+  "main": "dist/sosh.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --open --config webpack.config.js",
+    "js": "cross-env NODE_ENV=production webpack",
+    "minify": "uglifyjs --mangle --compress -o ./dist/sosh.min.js ./dist/sosh.js",
+    "build": "npm run js && npm run minify",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "share",
     "socialshare",
-    "nativeshare",
     "weixin",
     "qq",
     "weibo",
@@ -22,72 +27,24 @@
     "qrcode"
   ],
   "devDependencies": {
-    "autoprefixer": "^6.1.0",
-    "browser-sync": "^2.10.0",
-    "del": "^2.0.2",
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-consolidate": "^0.1.2",
-    "gulp-css-to-js": "0.0.1",
-    "gulp-cssnano": "^2.1.0",
-    "gulp-iconfont": "^6.0.0",
-    "gulp-if": "^2.0.0",
-    "gulp-imagemin": "^2.4.0",
-    "gulp-load-plugins": "^1.1.0",
-    "gulp-postcss": "^6.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.5.4",
-    "gulp-sass": "^2.1.0",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.4.2",
-    "gulp-util": "^3.0.7",
-    "lodash": "^3.10.1",
-    "merge-stream": "^1.0.0",
-    "run-sequence": "^1.1.4"
+    "autoprefixer": "^6.4.1",
+    "cross-env": "^2.0.1",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.22.0",
+    "node-sass": "^3.10.0",
+    "postcss-loader": "^0.13.0",
+    "sass-loader": "^4.0.2",
+    "shim4webpack": "0.0.2",
+    "style-loader": "^0.13.1",
+    "uglify-js": "^2.7.3",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
   },
-  "browsers": [
-    "Explorer >= 7",
-    "Firefox >= 24",
-    "Chrome >= 31",
-    "Safari >= 6",
-    "Opera >= 23",
-    "iOS >= 6",
-    "Android >= 4.0",
-    "and_uc >= 9",
-    "and_ff >= 30",
-    "and_chr >= 31",
-    "ie_mob >= 10",
-    "bb >= 10",
-    "op_mob >= 10"
-  ],
-  "src": {
-    "html": {
-      "dir": "src/html",
-      "ext": ".html"
-    },
-    "js": {
-      "dir": "src/js",
-      "ext": ".js"
-    },
-    "css": {
-      "dir": "src/css",
-      "ext": ".css"
-    },
-    "scss": {
-      "dir": "src/scss",
-      "ext": ".scss"
-    },
-    "img": {
-      "dir": "src/img",
-      "ext": ".{png,jpg,svg}"
-    },
-    "iconfont": {
-      "dir": "src/iconfont",
-      "ext": ".{eot,woff,woff2,ttf,svg}"
-    },
-    "iconsvg": {
-      "dir": "src/iconsvg",
-      "ext": ".svg"
-    }
+  "dependencies": {
+    "easy-classlist": "0.0.1",
+    "xtend": "^4.0.1"
   }
 }
