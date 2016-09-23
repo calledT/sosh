@@ -7,9 +7,10 @@
 - 支持使用`dataset`配置
 
 ### 默认初始化
-`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的两行代码就可以用上分享
+`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的三行代码就可以用上分享
 
 ```html
+<link rel="stylesheet" href="dist/sosh.min.css">
 <div class="sosh"></div>
 <script src="dist/sosh.min.js"></script>
 ```
