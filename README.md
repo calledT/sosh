@@ -1,5 +1,7 @@
 # Social Share
 
+[移动版请查看](https://github.com/calledT/soshm)
+
 ## 特性
 
 - 仅需调用`sosh.js`，无其他库依赖
@@ -7,6 +9,7 @@
 - 支持微信分享使用二维码扫码
 - 支持使用`dataset`配置
 - 支持AMD、CommonJS和浏览器全局变量（使用UMD）
+- 图标及样式打包在js里，无需额外请求
 
 ## 安装
 
@@ -54,12 +57,12 @@ npm install -S sosh
 
 ### 使用dataset进行配置
 
-除了能在构造函数初始化的时候进行参数配置外，也可以用`[data-*]`的方式进行配置，并且优先级高于函数参数
+除了能在构造函数初始化的时候进行参数配置外，也可以用`[data-*]`的方式进行配置，并且优先级高于函数参数。
 
 ```html
-<div class="pcdataset" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
+<div class="datasetconfig" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
 <script>
-  new Sosh('.pcdataset', {
+  new Sosh('.datasetconfig', {
     sites: ['weixin,', 'weibo', 'yixin', 'qzone']
   })
 </script>
