@@ -1,4 +1,4 @@
-// shim
+// Shim For Webpack Addstyle
 if(!Function.prototype.bind){
   Function.prototype.bind = function(){
     var fn = this,
@@ -27,17 +27,26 @@ if (!Array.prototype.filter){
 }
 
 require('../scss/index');
-var QRCode = require('qrcode');
 var extend = require('xtend');
 var classlist = require('easy-classlist');
+var QRCode = require('./qrcode');
+var socialSites = require('./sites');
 
 var doc = document;
 var body = doc.body;
 var docElem = doc.documentElement;
-var hasOwn = Object.prototype.hasOwnProperty;
+var datasetRegexp = /^data\-(.+)$/i;
+
+// Sosh Default Configs
 var metaDesc = doc.getElementsByName('description')[0];
 var firstImg = doc.getElementsByTagName('img')[0];
-var datasetRegexp = /^data\-(.+)$/i;
+var defaults = {
+  'title': doc.title,
+  'url': location.href,
+  'digest': metaDesc && metaDesc.content || '',
+  'pic': firstImg && firstImg.src || '',
+  'sites': ['weixin', 'weibo', 'yixin', 'qzone']
+};
 
 var pop = doc.createElement('div');
 pop.className = 'sosh-pop';
@@ -48,67 +57,20 @@ pop.innerHTML =
 
 body.appendChild(pop);
 
+var qrcodePic = $('.sosh-qrcode-pic')[0];
+var qrcodeClose = $('.sosh-pop-close')[0];
+
 // 初始化二维码
-var qrcode = new QRCode($('.sosh-qrcode-pic')[0], {
+var qrcode = new QRCode(qrcodePic, {
   text: location.href,
   width: 120,
   height: 120
 });
 
 // 二维码扫码弹窗添加关闭事件
-addEvent($('.sosh-pop-close')[0], 'click', function() {
+addEvent(qrcodeClose, 'click', function() {
   classlist(pop).remove('sosh-pop-show');
 });
-
-var socialSites = {
-  weixin: {
-    name: '微信',
-    icon: require('../img/weixin.png')
-  },
-  yixin: {
-    name: '易信',
-    icon: require('../img/yixin.png'),
-    api: 'http://open.yixin.im/share?url={{url}}&title={{title}}&pic={{pic}}&desc={{digest}}'
-  },
-  weibo: {
-    name: '微博',
-    icon: require('../img/weibo.png'),
-    api: 'http://service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{pic}}'
-  },
-  qzone: {
-    name: 'QQ空间',
-    icon: require('../img/qzone.png'),
-    api: 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{url}}&title={{title}}&pics={{pic}}&desc={{digest}}'
-  },
-  tqq: {
-    name: '腾讯微博',
-    icon: require('../img/tqq.png'),
-    api: 'http://share.v.t.qq.com/index.php?c=share&a=index&url={{url}}&title={{title}}&pic={{pic}}'
-  },
-  renren: {
-    name: '人人网',
-    icon: require('../img/renren.png'),
-    api: 'http://widget.renren.com/dialog/share?resourceUrl={{url}}&title={{title}}&pic={{pic}}&description={{digest}}'
-  },
-  douban: {
-    name: '豆瓣',
-    icon: require('../img/douban.png'),
-    api: 'http://douban.com/recommend/?url={{url}}&title={{title}}&image={{pic}}'
-  },
-  tieba: {
-    name: '百度贴吧',
-    icon: require('../img/tieba.png'),
-    api: 'http://tieba.baidu.com/f/commit/share/openShareApi?url={{url}}&title={{title}}&desc={{digest}}'
-  }
-};
-
-var defaults = {
-  'title': doc.title,
-  'url': location.href,
-  'digest': metaDesc && metaDesc.content || '',
-  'pic': firstImg && firstImg.src || '',
-  'sites': ['weixin', 'weibo', 'yixin', 'qzone']
-};
 
 var Sosh = function(selector, opts) {
   if (typeof selector === 'string') {
@@ -129,65 +91,21 @@ var Sosh = function(selector, opts) {
   }
 }
 
-function $(selector) {
-  var isID = selector.indexOf('#') === 0;
-  selector = selector.substr(1);
-
-  if (isID) {
-    return [doc.getElementById(selector)];
-  }
-
-  return getElementsByClassName(selector);
-}
-
-function parseDataset(elem) {
-  var dataset = {}, attrs = elem.attributes, length = attrs.length;
-  for (var i = 0; i < length; i++){
-    var attr = attrs[i], attrName = attr.nodeName;
-
-    if(datasetRegexp.test(attrName)) {
-      dataset[attrName.replace(datasetRegexp, '$1')] = attr.nodeValue;
-    }
-
-    if(attrName === 'data-sites') {
-      dataset['sites'] = attr.nodeValue.split(',');
-    }
-  }
-  return dataset;
-}
-
-function getSitesHtml(sites) {
-  var key;
-  var site;
-  var html = '';
-  var length = sites.length;
-
-  for(var i = 0; i < length; i++) {
-    key = sites[i];
-    site = socialSites[key];
-    if (site) {
-      html +=
-      '<div class="sosh-item ' + key + '" data-site="' + key + '" title="分享到' + site.name + '">' +
-        '<img class="sosh-item-icon" src="' + site.icon + '">' +
-        '<span class="sosh-item-text">' + site.name + '</span>' +
-      '</div>';
-    }
-  }
-
-  return html;
-}
-
+/**
+ * 分享按钮点击事件处理函数
+ * @param  {Element} agent    [初始化分享组件元素]
+ * @param  {Object} shareData [分享的数据]
+ */
 function handlerClick(agent, shareData) {
   delegate(agent, 'sosh-item', 'click', function() {
     var api = socialSites[this.getAttribute('data-site')].api;
     if (api) {
       for(var k in shareData) {
-        api = api.replace(new RegExp('{{'+k+'}}', 'g'), encodeURIComponent(shareData[k]));
+        api = api.replace(new RegExp('{{' + k + '}}', 'g'), encodeURIComponent(shareData[k]));
       }
       window.open(api, '_blank');
     } else {
       // 微信弹出二维码扫码气泡
-
       if(classlist(this).contains('weixin')) {
         var offset = getOffsetRect(this);
         pop.style.top = offset.top + this.offsetHeight + 10 + 'px';
@@ -202,43 +120,28 @@ function handlerClick(agent, shareData) {
   });
 }
 
-function addEvent(elem, event, fn) {
-  if (elem.addEventListener) {
-    return elem.addEventListener(event, fn, false);
-  } else {
-    return elem.attachEvent('on'+event, function(){fn.call(elem)});
+/**
+ * 简易选择器
+ * @param  {String} selector [ID或者类名选择器]
+ * @return {Array}          [元素数组]
+ */
+function $(selector) {
+  var isID = selector.indexOf('#') === 0;
+  selector = selector.substr(1);
+
+  if (isID) {
+    var elem = doc.getElementById(selector);
+    return [elem];
   }
+
+  return getElementsByClassName(selector);
 }
 
-function delegate(agent, classname, event, fn) {
-  addEvent(agent, event, function(e) {
-    e = e || window.event;
-    var target = e.target || e.srcElement;
-    while (target && target !== this) {
-      if (classlist(target).contains(classname)) {
-        typeof fn === 'function' && fn.call(target, e);
-        return;
-      }
-      target = target.parentNode;
-    }
-  });
-}
-
-function getOffsetRect(elem) {
-  var box = elem.getBoundingClientRect()
-
-  var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-  var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-
-  var clientTop = docElem.clientTop || body.clientTop || 0;
-  var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-
-  var top  = box.top +  scrollTop - clientTop;
-  var left = box.left + scrollLeft - clientLeft;
-
-  return { top: Math.round(top), left: Math.round(left) };
-}
-
+/**
+ * 通过选择器的classname获取元素数组
+ * @param  {String} classname [类名]
+ * @return {Array}            [元素数组]
+ */
 function getElementsByClassName(classname) {
   var elements;
   var pattern;
@@ -268,6 +171,114 @@ function getElementsByClassName(classname) {
   return results;
 }
 
+/**
+ * 解析元素的[data-*]属性成hashmap对象
+ * @param  {Element} elem [html元素]
+ * @return {Object}
+ */
+function parseDataset(elem) {
+  var dataset = {};
+  var attrs = elem.attributes;
+  for (var i = 0, length = attrs.length; i < length; i++){
+    var attr = attrs[i];
+    var attrName = attr.nodeName;
+
+    if(datasetRegexp.test(attrName)) {
+      dataset[attrName.replace(datasetRegexp, '$1')] = attr.nodeValue;
+    }
+
+    if(attrName === 'data-sites') {
+      dataset['sites'] = attr.nodeValue.split(',');
+    }
+  }
+  return dataset;
+}
+
+/**
+ * 转换sites对象配置为html字符串
+ * @param  {Object} sites [分享站点配置]
+ * @return {string}       [html字符串]
+ */
+function getSitesHtml(sites) {
+  var key;
+  var site;
+  var html = '';
+  var length = sites.length;
+
+  for(var i = 0; i < length; i++) {
+    key = sites[i];
+    site = socialSites[key];
+    if (site) {
+      html +=
+      '<div class="sosh-item ' + key + '" data-site="' + key + '" title="分享到' + site.name + '">' +
+        '<img class="sosh-item-icon" src="' + site.icon + '">' +
+        '<span class="sosh-item-text">' + site.name + '</span>' +
+      '</div>';
+    }
+  }
+
+  return html;
+}
+
+/**
+ * 事件绑定
+ * @param {Element}   elem [html元素]
+ * @param {String}   event [事件名称]
+ * @param {Function} fn    [事件处理函数]
+ */
+function addEvent(elem, event, fn) {
+  if (elem.addEventListener) {
+    return elem.addEventListener(event, fn, false);
+  } else {
+    return elem.attachEvent('on'+event, function(){fn.call(elem)});
+  }
+}
+
+/**
+ * 事件委托
+ * @param  {Element}   agent    [被委托的html元素]
+ * @param  {String}   classname [类名]
+ * @param  {String}   event     [事件名称]
+ * @param  {Function} fn        [事件处理函数]
+ */
+function delegate(agent, classname, event, fn) {
+  addEvent(agent, event, function(e) {
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    while (target && target !== this) {
+      if (classlist(target).contains(classname)) {
+        typeof fn === 'function' && fn.call(target, e);
+        return;
+      }
+      target = target.parentNode;
+    }
+  });
+}
+
+/**
+ * 获取html元素的左上角位置数值
+ * @param  {Element} elem [html元素]
+ * @return {Object}      [带有top和left属性的对象]
+ */
+function getOffsetRect(elem) {
+  var box = elem.getBoundingClientRect()
+
+  var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+
+  var clientTop = docElem.clientTop || body.clientTop || 0;
+  var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+
+  var top  = box.top +  scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+    top: Math.round(top),
+    left: Math.round(left)
+  };
+}
+
+// 默认初始化带有类名sosh的元素
 new Sosh('.sosh');
 
 module.exports = Sosh;
