@@ -4,16 +4,27 @@
 
 - 仅需调用`sosh.js`，无其他库依赖
 - 支持IE7以上浏览器
+- 支持微信分享使用二维码扫码
 - 支持使用`dataset`配置
+- 支持AMD、CommonJS和浏览器全局变量（使用UMD）
 
-### 默认初始化
-`Sosh`默认初始化带有类名`sosh`的元素，所以只需简单的三行代码就可以用上分享
+## 安装
+
+通过npm进行安装
+
+```shell
+npm install -S sosh
+```
+
+或者把脚本引进你的页面里
 
 ```html
-<link rel="stylesheet" href="dist/sosh.min.css">
-<div class="sosh"></div>
-<script src="dist/sosh.min.js"></script>
+<script src="sosh.min.js"></script>
 ```
+
+## 使用
+
+`Sosh`默认初始化带有类名`sosh`的元素
 
 ### 使用构造函数初始化
 
@@ -40,7 +51,6 @@
   })
 </script>
 ```
-
 
 ### 使用dataset进行配置
 
