@@ -56,12 +56,7 @@ module.exports = {
       },
     ]
   },
-  resolve: {
-    extensions: ['', '.js', '.scss'],
-    alias: {
-      'qrcode': path.resolve(__dirname, 'src/js/qrcode.js')
-    }
-  },
+  resolve: {extensions: ['', '.js', '.scss']},
   postcss: [autoprefixer(autoprefixerConfig)],
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
