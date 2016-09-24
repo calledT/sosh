@@ -6,7 +6,7 @@
 
 - 仅需调用`sosh.js`，无其他库依赖
 - 支持IE7以上浏览器
-- 支持微信分享使用二维码扫码
+- 支持微信二维码扫码分享
 - 支持使用`dataset`配置
 - 支持AMD、CommonJS和浏览器全局变量（使用UMD）
 - 图标及样式打包在js里，无需额外请求
@@ -27,19 +27,14 @@ npm install -S sosh
 
 ## 使用
 
-`Sosh`默认初始化带有类名`sosh`的元素
-
-### 使用构造函数初始化
-
-使用`Sosh`构造函数进行初始化:
-
-1. 第一个参数为字符串类型，代表选择器。支持简单的ID和Class两种形式，如：`#id`、`.classname`
-2. 第二个参数为对象字面量，配置分享的相关内容
+### 参数
+1. 第一个参数为字符串类型，代表选择器。支持ID和单一类名选择器两种形式，如：`#id`、`.classname`。
+2. 第二个参数为对象字面量，配置分享的相关内容。
 
 ```html
 <div id="soshid"></div>
 <script>
-  new Sosh('#soshid', {
+  sosh('#soshid', {
     // 分享的链接，默认使用location.href
     url: '',
     // 分享的标题，默认使用document.title
@@ -62,7 +57,7 @@ npm install -S sosh
 ```html
 <div class="datasetconfig" data-title="分享标题" data-sites="yixin,weibo,weixin,tqq,qzone"></div>
 <script>
-  new Sosh('.datasetconfig', {
+  sosh('.datasetconfig', {
     sites: ['weixin,', 'weibo', 'yixin', 'qzone']
   })
 </script>
