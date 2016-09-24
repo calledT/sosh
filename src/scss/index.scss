@@ -43,32 +43,43 @@ $sites: (
     float: left;
     margin: 0 2px;
     cursor: pointer;
-    border-radius: 50%;
-    text-align: center;
-
-    &:focus,
-    &:active {
-      outline: 0;
-    }
 
     &-icon {
-      vertical-align: middle;
+      @include inline-block;
+
+      box-sizing: content-box;
       width: 20px;
       height: 20px;
       padding: 5px;
-      text-decoration: none;
+      margin: 0;
+      vertical-align: middle;
+      border-radius: 50%;
+
+      img {
+        vertical-align: top;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
     }
 
     &-text {
       display: none;
+      font-size: 14px;
+      color: #666;
     }
 
     @each $name, $color in $sites {
       &.#{$name} {
-        background: $color;
+        .sosh-item-icon {
+          background: $color;
+        }
 
         &:hover {
-          background: darken($color, 10%);
+          .sosh-item-icon {
+            background: darken($color, 10%);
+          }
         }
       }
     }
@@ -92,12 +103,12 @@ $sites: (
       position: absolute;
       width: 10px;
       height: 10px;
-      line-height: 10px;
+      line-height: 6px;
       right: 10px;
       top: 10px;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: normal;
-      font-family: Consolas, Monaco;
+      font-family: monospace;
       text-decoration: none;
 
       &:hover {
@@ -108,6 +119,10 @@ $sites: (
   }
 
   &-qrcode {
+    &-pop {
+
+    }
+
     &-pic {
       width: 120px;
       height: 120px;
@@ -127,9 +142,9 @@ $sites: (
     &-text {
       color: #666;
       float: left;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 30px;
-      margin-left: 30px;
+      margin-left: 20px;
     }
   }
 }

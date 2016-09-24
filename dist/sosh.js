@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("Sosh", [], factory);
+		define("sosh", [], factory);
 	else if(typeof exports === 'object')
-		exports["Sosh"] = factory();
+		exports["sosh"] = factory();
 	else
-		root["Sosh"] = factory();
+		root["sosh"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -86,12 +86,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	var extend = __webpack_require__(5);
 	var classlist = __webpack_require__(6);
 	var QRCode = __webpack_require__(7);
-	var socialSites = __webpack_require__(8);
+	var sitesObj = __webpack_require__(8);
 	
 	var doc = document;
 	var body = doc.body;
 	var docElem = doc.documentElement;
 	var datasetRegexp = /^data\-(.+)$/i;
+	var templateStr =
+	  '<div class="sosh-item {{site}}" data-site="{{site}}" title="分享到{{name}}">' +
+	    '<span class="sosh-item-icon">' +
+	      '<img src="{{icon}}" alt="{{name}}">' +
+	    '</span>' +
+	    '<span class="sosh-item-text">{{name}}</span>' +
+	  '</div>';
 	
 	// Sosh Default Configs
 	var metaDesc = doc.getElementsByName('description')[0];
@@ -128,21 +135,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  classlist(pop).remove('sosh-pop-show');
 	});
 	
-	var Sosh = function(selector, opts) {
+	var sosh = function(selector, opts) {
 	  if (typeof selector === 'string') {
-	    this.elems = $(selector);
-	    var length = this.elems.length;
+	    var elems = $(selector);
+	    for(var i = 0, length = elems.length; i < length; i++) {
+	      var elem = elems[i];
+	      var status = elem.getAttribute('sosh-status');
 	
-	    for(var i = 0; i < length; i++) {
-	      var elem = this.elems[i];
+	      if (status !== 'initialized') {
+	        var config = extend(defaults, opts, parseDataset(elem));
 	
-	      var config = extend(defaults, opts, parseDataset(elem));
+	        elem.innerHTML = getSitesHtml(config.sites);
 	
-	      elem.innerHTML = getSitesHtml(config.sites);
+	        handlerClick(elem, config);
 	
-	      handlerClick(elem, config);
+	        elem.setAttribute('sosh-status', 'initialized');
 	
-	      classlist(elem).add('sosh');
+	        classlist(elem).add('sosh');
+	      }
 	    }
 	  }
 	}
@@ -154,7 +164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	function handlerClick(agent, shareData) {
 	  delegate(agent, 'sosh-item', 'click', function() {
-	    var api = socialSites[this.getAttribute('data-site')].api;
+	    var api = sitesObj[this.getAttribute('data-site')].api;
 	    if (api) {
 	      for(var k in shareData) {
 	        api = api.replace(new RegExp('{{' + k + '}}', 'g'), encodeURIComponent(shareData[k]));
@@ -258,13 +268,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var html = '';
 	  for(var i = 0, length = sites.length; i < length; i++) {
 	    var key = sites[i];
-	    var site = socialSites[key];
-	    if (site) {
-	      html +=
-	      '<div class="sosh-item ' + key + '" data-site="' + key + '" title="分享到' + site.name + '">' +
-	        '<img class="sosh-item-icon" src="' + site.icon + '">' +
-	        '<span class="sosh-item-text">' + site.name + '</span>' +
-	      '</div>';
+	    var siteObj = sitesObj[key];
+	    if (siteObj) {
+	      html += templateStr
+	        .replace(/\{\{site\}\}/g, key)
+	        .replace(/\{\{icon\}\}/g, siteObj.icon)
+	        .replace(/\{\{name\}\}/g, siteObj.name);
+	    } else {
+	      console.warn('site [' + key + '] not exist.');
 	    }
 	  }
 	  return html;
@@ -328,10 +339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}
 	
-	// 默认初始化带有类名sosh的元素
-	new Sosh('.sosh');
-	
-	module.exports = Sosh;
+	module.exports = sosh;
 
 
 /***/ },
@@ -369,7 +377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".sosh{*zoom:1;text-align:center}.sosh:after,.sosh:before{content:\" \";display:table}.sosh:after{clear:both}.sosh-item{float:left;margin:0 2px;cursor:pointer;border-radius:50%;text-align:center}.sosh-item:active,.sosh-item:focus{outline:0}.sosh-item-icon{vertical-align:middle;width:20px;height:20px;padding:5px;text-decoration:none}.sosh-item-text{display:none}.sosh-item.weixin{background:#49b233}.sosh-item.weixin:hover{background:#398a28}.sosh-item.yixin{background:#23cfaf}.sosh-item.yixin:hover{background:#1ca38a}.sosh-item.weibo{background:#f04e59}.sosh-item.weibo:hover{background:#ec1f2d}.sosh-item.qzone{background:#fdbe3d}.sosh-item.qzone:hover{background:#fcad0b}.sosh-item.renren{background:#1f7fc9}.sosh-item.renren:hover{background:#18639d}.sosh-item.tieba{background:#5b95f0}.sosh-item.tieba:hover{background:#2c77ec}.sosh-item.douban{background:#228a31}.sosh-item.douban:hover{background:#186122}.sosh-item.tqq{background:#97cbe1}.sosh-item.tqq:hover{background:#6fb7d6}.sosh-item.qq{background:#4081e1}.sosh-item.qq:hover{background:#2066ce}.sosh-item.weixintimeline{background:#1cb526}.sosh-item.weixintimeline:hover{background:#15891d}.sosh-pop{display:none;position:absolute;padding:20px;background:#fff;border:1px solid #eee;box-shadow:0 0 8px #cdcdcd;z-index:999}.sosh-pop-show{display:block}.sosh-pop-close{color:#bbb;position:absolute;width:10px;height:10px;line-height:10px;right:10px;top:10px;font-size:16px;font-weight:400;font-family:Consolas,Monaco;text-decoration:none}.sosh-pop-close:hover{text-decoration:none;color:#666}.sosh-qrcode-pic{width:120px;height:120px;overflow:hidden;float:left}.sosh-qrcode-pic img{height:100%;width:100%;margin:0;padding:0;border:0;vertical-align:top}.sosh-qrcode-text{color:#666;float:left;font-size:13px;line-height:30px;margin-left:30px}", ""]);
+	exports.push([module.id, ".sosh{*zoom:1;text-align:center}.sosh:after,.sosh:before{content:\" \";display:table}.sosh:after{clear:both}.sosh-item{float:left;margin:0 2px;cursor:pointer}.sosh-item-icon{display:inline-block;*display:inline;*zoom:1;box-sizing:content-box;width:20px;height:20px;padding:5px;margin:0;vertical-align:middle;border-radius:50%}.sosh-item-icon img{vertical-align:top;height:100%;width:100%;margin:0;padding:0}.sosh-item-text{display:none;font-size:14px;color:#666}.sosh-item.weixin .sosh-item-icon{background:#49b233}.sosh-item.weixin:hover .sosh-item-icon{background:#398a28}.sosh-item.yixin .sosh-item-icon{background:#23cfaf}.sosh-item.yixin:hover .sosh-item-icon{background:#1ca38a}.sosh-item.weibo .sosh-item-icon{background:#f04e59}.sosh-item.weibo:hover .sosh-item-icon{background:#ec1f2d}.sosh-item.qzone .sosh-item-icon{background:#fdbe3d}.sosh-item.qzone:hover .sosh-item-icon{background:#fcad0b}.sosh-item.renren .sosh-item-icon{background:#1f7fc9}.sosh-item.renren:hover .sosh-item-icon{background:#18639d}.sosh-item.tieba .sosh-item-icon{background:#5b95f0}.sosh-item.tieba:hover .sosh-item-icon{background:#2c77ec}.sosh-item.douban .sosh-item-icon{background:#228a31}.sosh-item.douban:hover .sosh-item-icon{background:#186122}.sosh-item.tqq .sosh-item-icon{background:#97cbe1}.sosh-item.tqq:hover .sosh-item-icon{background:#6fb7d6}.sosh-item.qq .sosh-item-icon{background:#4081e1}.sosh-item.qq:hover .sosh-item-icon{background:#2066ce}.sosh-item.weixintimeline .sosh-item-icon{background:#1cb526}.sosh-item.weixintimeline:hover .sosh-item-icon{background:#15891d}.sosh-pop{display:none;position:absolute;padding:20px;background:#fff;border:1px solid #eee;box-shadow:0 0 8px #cdcdcd;z-index:999}.sosh-pop-show{display:block}.sosh-pop-close{color:#bbb;position:absolute;width:10px;height:10px;line-height:6px;right:10px;top:10px;font-size:20px;font-weight:400;font-family:monospace;text-decoration:none}.sosh-pop-close:hover{text-decoration:none;color:#666}.sosh-qrcode-pic{width:120px;height:120px;overflow:hidden;float:left}.sosh-qrcode-pic img{height:100%;width:100%;margin:0;padding:0;border:0;vertical-align:top}.sosh-qrcode-text{color:#666;float:left;font-size:14px;line-height:30px;margin-left:20px}", ""]);
 	
 	// exports
 

@@ -30,12 +30,19 @@ require('../scss/index');
 var extend = require('xtend');
 var classlist = require('easy-classlist');
 var QRCode = require('./qrcode');
-var socialSites = require('./sites');
+var sitesObj = require('./sites');
 
 var doc = document;
 var body = doc.body;
 var docElem = doc.documentElement;
 var datasetRegexp = /^data\-(.+)$/i;
+var templateStr =
+  '<div class="sosh-item {{site}}" data-site="{{site}}" title="分享到{{name}}">' +
+    '<span class="sosh-item-icon">' +
+      '<img src="{{icon}}" alt="{{name}}">' +
+    '</span>' +
+    '<span class="sosh-item-text">{{name}}</span>' +
+  '</div>';
 
 // Sosh Default Configs
 var metaDesc = doc.getElementsByName('description')[0];
@@ -72,21 +79,24 @@ addEvent(qrcodeClose, 'click', function() {
   classlist(pop).remove('sosh-pop-show');
 });
 
-var Sosh = function(selector, opts) {
+var sosh = function(selector, opts) {
   if (typeof selector === 'string') {
-    this.elems = $(selector);
-    var length = this.elems.length;
+    var elems = $(selector);
+    for(var i = 0, length = elems.length; i < length; i++) {
+      var elem = elems[i];
+      var status = elem.getAttribute('sosh-status');
 
-    for(var i = 0; i < length; i++) {
-      var elem = this.elems[i];
+      if (status !== 'initialized') {
+        var config = extend(defaults, opts, parseDataset(elem));
 
-      var config = extend(defaults, opts, parseDataset(elem));
+        elem.innerHTML = getSitesHtml(config.sites);
 
-      elem.innerHTML = getSitesHtml(config.sites);
+        handlerClick(elem, config);
 
-      handlerClick(elem, config);
+        elem.setAttribute('sosh-status', 'initialized');
 
-      classlist(elem).add('sosh');
+        classlist(elem).add('sosh');
+      }
     }
   }
 }
@@ -98,7 +108,7 @@ var Sosh = function(selector, opts) {
  */
 function handlerClick(agent, shareData) {
   delegate(agent, 'sosh-item', 'click', function() {
-    var api = socialSites[this.getAttribute('data-site')].api;
+    var api = sitesObj[this.getAttribute('data-site')].api;
     if (api) {
       for(var k in shareData) {
         api = api.replace(new RegExp('{{' + k + '}}', 'g'), encodeURIComponent(shareData[k]));
@@ -202,13 +212,14 @@ function getSitesHtml(sites) {
   var html = '';
   for(var i = 0, length = sites.length; i < length; i++) {
     var key = sites[i];
-    var site = socialSites[key];
-    if (site) {
-      html +=
-      '<div class="sosh-item ' + key + '" data-site="' + key + '" title="分享到' + site.name + '">' +
-        '<img class="sosh-item-icon" src="' + site.icon + '">' +
-        '<span class="sosh-item-text">' + site.name + '</span>' +
-      '</div>';
+    var siteObj = sitesObj[key];
+    if (siteObj) {
+      html += templateStr
+        .replace(/\{\{site\}\}/g, key)
+        .replace(/\{\{icon\}\}/g, siteObj.icon)
+        .replace(/\{\{name\}\}/g, siteObj.name);
+    } else {
+      console.warn('site [' + key + '] not exist.');
     }
   }
   return html;
@@ -272,7 +283,4 @@ function getOffsetRect(elem) {
   };
 }
 
-// 默认初始化带有类名sosh的元素
-new Sosh('.sosh');
-
-module.exports = Sosh;
+module.exports = sosh;
