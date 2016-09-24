@@ -178,19 +178,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/**
 	 * 简易选择器
-	 * @param  {String} selector [ID或者类名选择器]
+	 * @param  {String} selector [ID或者单个类名选择器]
 	 * @return {Array}          [元素数组]
 	 */
 	function $(selector) {
-	  var isID = selector.indexOf('#') === 0;
-	  selector = selector.substr(1);
+	  var str = selector.substr(1);
 	
-	  if (isID) {
-	    var elem = doc.getElementById(selector);
-	    return [elem];
+	  if (selector.indexOf('#') === 0) {
+	    var elem = doc.getElementById(str);
+	    return elem ? [elem] : [];
 	  }
 	
-	  return getElementsByClassName(selector);
+	  return getElementsByClassName(str);
 	}
 	
 	/**
@@ -217,7 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else {
 	    elements = doc.getElementsByTagName('*');
 	    pattern = new RegExp('(^|\\s)' + classname + '(\\s|$)');
-	    for (var i = 0; i < elements.length; i++) {
+	    for (var i = 0, length = elements.length; i < length; i++) {
 	      if (pattern.test(elements[i].className)) {
 	        results.push(elements[i]);
 	      }
@@ -256,14 +255,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {string}       [html字符串]
 	 */
 	function getSitesHtml(sites) {
-	  var key;
-	  var site;
 	  var html = '';
-	  var length = sites.length;
-	
-	  for(var i = 0; i < length; i++) {
-	    key = sites[i];
-	    site = socialSites[key];
+	  for(var i = 0, length = sites.length; i < length; i++) {
+	    var key = sites[i];
+	    var site = socialSites[key];
 	    if (site) {
 	      html +=
 	      '<div class="sosh-item ' + key + '" data-site="' + key + '" title="分享到' + site.name + '">' +
@@ -272,7 +267,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      '</div>';
 	    }
 	  }
-	
 	  return html;
 	}
 	
