@@ -1,4 +1,4 @@
-var Sosh = require('../js/index');
+var sosh = require('../js/index');
 
-new Sosh('#share', {sites: ['weixin', 'weibo', 'yixin', 'qzone', 'tqq']});
-new Sosh('.share');
+sosh('#share', {sites: ['weixin', 'weibo', 'yixin', 'qzone', 'tqq']});
+sosh('.share');
