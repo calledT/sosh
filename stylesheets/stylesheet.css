@@ -143,13 +143,6 @@ img {
   max-width: 739px;
   padding: 5px;
   margin: 10px 0 10px 0;
-  border: 1px solid #ebebeb;
-
-  box-shadow: 0 0 5px #ebebeb;
-  -webkit-box-shadow: 0 0 5px #ebebeb;
-  -moz-box-shadow: 0 0 5px #ebebeb;
-  -o-box-shadow: 0 0 5px #ebebeb;
-  -ms-box-shadow: 0 0 5px #ebebeb;
 }
 
 p img {
@@ -300,7 +293,7 @@ Full-Width Styles
 
 #header_wrap {
   background: #212121;
-  background: url(https://images.unsplash.com/photo-1431887773042-803ed52bed26?crop=entropy&fit=crop&fm=jpg&h=700&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200) center no-repeat;
+  background: url(http://ww3.sinaimg.cn/large/68250c36gw1f851iuwa2dj20xc0jg44r.jpg) center no-repeat;
   background-size: cover;
 }
 
