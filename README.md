@@ -62,7 +62,6 @@ npm install -S sosh
   })
 </script>
 ```
-
 ## License
 
 MIT © calledT
